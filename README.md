@@ -6,4 +6,4 @@ For more details on the algorithm, please refer to our preprint paper.
 
 Dhawale AK, Poddar R, Kopelowitz A, Normand V, Wolff SBE, Ölveckzy BP (2016) Automated long-term recording and analysis of neural activity in behaving animals. *bioRxiv*.  [https://doi.org/10.1101/033266](https://doi.org/10.1101/033266).
 
-We are currently developing of a user-interface that would make FAST easy for anybody to run on a variety of data-sets, but for now we provide the source code and executable files as is. For any details not covered in this documentation, please [contact us](https://olveczkylab.oeb.harvard.edu/about).
+We are currently developing a user-interface that would make FAST easier to run on a variety of data-sets and platforms, but for now we provide the source code and executables as is. For any details not covered in this documentation, please [contact us](https://olveczkylab.oeb.harvard.edu/about).
