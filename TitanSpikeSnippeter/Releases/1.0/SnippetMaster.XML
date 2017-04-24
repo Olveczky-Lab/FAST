@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>SnippetMaster</name></assembly>
+<members>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:AgentHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:HDF5Helper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Helper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:MathHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Program">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:ThrottlingAgent.ThrottlingAgent.DoWork(Microsoft.FSharp.Control.FSharpAsync{Microsoft.FSharp.Core.Unit})">
+<summary>
+ Queue the specified asynchronous workflow for processing
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:ThrottlingAgent.ThrottlingAgent">
+<summary>
+ Represents an agent that runs operations in concurrently. When the number
+ of concurrent operations exceeds &apos;limit&apos;, they are queued and processed later
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ThrottlingAgent.ThrottlingAgentMessage">
+<summary>
+ Message type used by the agent - contains queueing 
+ of work items and notification of completion 
+</summary>
+</member>
+<member name="T:ThrottlingAgent">
+
+</member>
+</members>
+</doc>

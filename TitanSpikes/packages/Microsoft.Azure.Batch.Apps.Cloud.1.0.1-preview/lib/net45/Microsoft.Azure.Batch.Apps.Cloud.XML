@@ -1,0 +1,1421 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Azure.Batch.Apps.Cloud</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.CloudApplication">
+            <summary>
+            Represents an application running in the cloud.  For each application,
+            you must provide an instance of CloudApplication, which the Batch Apps
+            framework uses to map job types to processing classes and application
+            images.
+            </summary>
+            <remarks>
+            The framework examines the CloudApplication object only during startup.
+            Changes made to CloudApplication properties after the framework has loaded
+            will have no effect.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.CloudApplication.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.CloudApplication"/> type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.CloudApplication.ApplicationName">
+            <summary>
+            Gets or sets the name of the application.  This is used to locate
+            the application image (virtual hard disk file).
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.CloudApplication.JobTypes">
+            <summary>
+            Gets or sets the job types processed by this application.
+            </summary>
+            <remarks>This member supports the case where an application processes
+            multiple job types; in the common case where the application processes
+            only one job type, the <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.CloudApplication.JobType"/> property is more convenient.</remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.CloudApplication.JobType">
+            <summary>
+            Gets or sets the job type processed by this application.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.CloudFileNotFoundException">
+            <summary>
+            The exception that is raised when an <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.IFileService"/> is
+            asked for a file that does not exist in cloud storage.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.CloudFileNotFoundException.ContainerName">
+            <summary>
+            Gets the name of the cloud storage container from which the file was
+            requested.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.CloudFileNotFoundException.FileName">
+            <summary>
+            Gets the name of the file that was not found in cloud storage.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.CloudNodeRole">
+            <summary>
+            Specifies the role of an <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ICloudNode"/>; that is, the processing service
+            provided by that node.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.CloudNodeRole.WebService">
+            <summary>
+            The node runs the Cloud Fabric Web Service and job splitters.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.CloudNodeRole.ParallelProcessor">
+            <summary>
+            The node runs embarrassingly parallel workloads.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.CloudNodeRole.MpiProcessor">
+            <summary>
+            The node runs MPI workloads.  It may be a head node or a child node.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.CloudNodeRole.Unknown">
+            <summary>
+            The node was not recognised as any type that runs cloud assemblies.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess">
+            <summary>
+            Represents an external program.
+            </summary>
+            <remarks>
+            This is a convenience class for task processors to run programs from the
+            application image.  You can run programs directly using the <see cref="T:System.Diagnostics.Process"/>
+            type, but ExternalProcess supports common idioms such as exit code handling,
+            retrying, etc.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess"/> type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.Run">
+            <summary>
+            Runs the external program.
+            </summary>
+            <returns>The results of the program.</returns>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.CommandPath">
+            <summary>
+            Gets or sets the external program path.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.Arguments">
+            <summary>
+            Gets or sets the arguments passed to the external program.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.WorkingDirectory">
+            <summary>
+            Gets or sets the working directory for the external program process.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.EnvironmentVariables">
+            <summary>
+            Gets the environment variables to be set on the external program process.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.CancellationToken">
+            <summary>
+            Gets or sets a cancellation token which can be used to cancel the
+            external process.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.ErrorPolicy">
+            <summary>
+            Gets or sets how to handle errors (nonzero exit codes) from the external
+            process.  The default is to throw an <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessException"/>
+            on any nonzero exit code.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.MessagePolicy">
+            <summary>
+            Gets or sets how to handle messages (text printed to standard output or
+            standard error) from the external process.
+            </summary>
+            <remarks>This allows an external process to be terminated early if it produces
+            output which you know means the process cannot succeed.</remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.StandardOutputFile">
+            <summary>
+            Gets or sets the name of the file to receive the external process
+            console output (stdout).  Optional.
+            </summary>
+            <remarks>The output is also available via the <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessResult.StandardOutput"/>
+            property.</remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.StandardErrorFile">
+            <summary>
+            Gets or sets the name of the file to receive the external process
+            console error output (stderr).  Optional.
+            </summary>
+            <remarks>The error output is also available via the <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessResult.StandardError"/>
+            property.</remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.Log">
+            <summary>
+            Gets or sets where to log messages about external program execution,
+            if desired.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessErrorPolicy">
+            <summary>
+            A delegate specifying how the <see cref="M:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.Run"/> method
+            should handle external program errors (nonzero exit codes).
+            </summary>
+            <param name="error">Information about the external program error.</param>
+            <returns>An <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessErrorHandling"/> specifying the action to
+            take in response to the error.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessOutputMessagePolicy">
+            <summary>
+            A delegate specifying how the <see cref="M:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.Run"/> method
+            should respond to program console output.
+            </summary>
+            <param name="output">Information about the external program output.</param>
+            <returns>An <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessContinueOption"/> specifying the action to take
+            in response to the console output message.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessContinueOption">
+            <summary>
+            Specifies whether <see cref="M:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.Run"/> should continue.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessContinueOption.Continue">
+            <summary>
+            The program should continue.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessContinueOption.Abort">
+            <summary>
+            The program should be aborted.  This will result in an <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessException"/>.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessError">
+            <summary>
+            Contains information about a failed external process (one that has
+            exited with a nonzero error code).
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessError.ExitCode">
+            <summary>
+            Gets the exit code of the external process.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessError.ErrorMessage">
+            <summary>
+            Gets any messages output by the process to standard error.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessError.RetryCount">
+            <summary>
+            Gets the number of times the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess"/> has tried
+            to run the program.  (The first time the process fails, RetryCount will be 1.)
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessErrorHandling">
+            <summary>
+            Specifies how <see cref="M:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.Run"/> should handle
+            a process that has exited with an error (a nonzero exit code).
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessErrorHandling.Return">
+            <summary>
+            The <see cref="M:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.Run"/> method should return.  The exit
+            code will be available in the <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessResult.ExitCode"/> property.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessErrorHandling.Throw">
+            <summary>
+            The <see cref="M:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.Run"/> method should throw an <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessException"/>.
+            This can be caught by the task processor or allowed to propagate up to the
+            framework which will handle it appropriately.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessErrorHandling.RetryAfter(System.Int32)">
+            <summary>
+            The <see cref="M:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.Run"/> method should wait for the specified time then
+            re-run the process.
+            </summary>
+            <param name="milliseconds">The time in milliseconds to wait before re-running.</param>
+            <returns>An object specifying retry handling.</returns>
+            <remarks>The external program is re-run using the same files and settings, so
+            this should be used only for transient errors such as network-related errors.
+            In addition, if the error persists even after multiple retries (see the
+            <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessError.RetryCount"/> property), you should stop retrying.
+            This will fail the task so that the compute node can be used to
+            process other tasks.  You can manually restart the task once the network
+            error has been corrected.</remarks>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessErrorPolicies">
+            <summary>
+            Contains common error handling policies for use with
+            <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.ErrorPolicy"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessErrorPolicies.AlwaysThrow">
+            <summary>
+            Specifies that any process error should cause an
+            <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessException"/> to be thrown.  This is
+            the default.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessErrorPolicies.Ignore(System.Int32[])">
+            <summary>
+            Specifies that specific process error codes should be ignored
+            and should result in a normal return to the task processor; other
+            error codes should throw an <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessException"/>.
+            </summary>
+            <param name="exitCodesToIgnore">Exit codes that should be ignored.</param>
+            <returns>A policy which ignores the specified exit codes but throws on all others.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessException">
+            <summary>
+            The exception that is raised when an external program exits with
+            a nonzero exit code.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessException.CommandPath">
+            <summary>
+            Gets the path to the program that failed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessException.Arguments">
+            <summary>
+            Gets the arguments passed to the program that failed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessException.ExitCode">
+            <summary>
+            Gets the exit code of the program that failed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessException.StandardOutput">
+            <summary>
+            Gets any text sent by the program to standard output.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessException.StandardError">
+            <summary>
+            Gets any text sent by the program to standard error.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessOutputMessage">
+            <summary>
+            Contains a message output by an <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess"/> command-line program.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessOutputMessage.Source">
+            <summary>
+            Gets the stream to which the program output the message.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessOutputMessage.Output">
+            <summary>
+            Gets the text of the message.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessOutputMessageSource">
+            <summary>
+            The source of an <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessOutputMessage"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessOutputMessageSource.StandardOutput">
+            <summary>
+            The message was output to standard output.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessOutputMessageSource.StandardError">
+            <summary>
+            The message was output to standard error.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessOutputMessagePolicies">
+            <summary>
+            Contains common output message handling policies for use with
+            <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess.MessagePolicy"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessOutputMessagePolicies.AbortOnMessageContaining(System.String[])">
+            <summary>
+            Specifies that if the specified text appears in console output
+            then the external program should be immediately aborted.
+            </summary>
+            <param name="texts">The texts which should trigger an early abort.</param>
+            <returns>A policy which aborts the external process if any of the specified
+            texts appear on standard output or standard error.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessResult">
+            <summary>
+            Contains the results of running an external program.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessResult.ExitCode">
+            <summary>
+            Gets the exit code of the program.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessResult.StandardOutput">
+            <summary>
+            Gets any text sent by the program to standard output.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessResult.StandardError">
+            <summary>
+            Gets any text sent by the program to standard error.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.FileContainer">
+            <summary>
+            Specifies the container or a file in cloud storage.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.FileContainer.User">
+            <summary>
+            The container associated with the user who submitted a job.
+            </summary>
+            <remarks>
+            Use this container for files uploaded by a user, as these are associated with
+            a user rather than a specific job.
+            </remarks>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.FileContainer.Job">
+            <summary>
+            The container associated with the current job.
+            </summary>
+            <remarks>
+            Use this container for files output by other tasks in the current job.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.FileServiceExtensions">
+            <summary>
+            Contains extension methods for <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.IFileService"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.FileServiceExtensions.GetInputFile(Microsoft.Azure.Batch.Apps.Cloud.IFileService,System.String,System.DateTime)">
+            <summary>
+            Gets a file uploaded by a user, using filename and timestamp.
+            </summary>
+            <param name="fileService">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.IFileService"/>.</param>
+            <param name="fileName">The name of the uploaded file to retrieve.</param>
+            <param name="timestamp">The timestamp of the uploaded file to retrieve.</param>
+            <returns>An <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.IFile"/> containing the file content and metadata.</returns>
+            <exception cref="T:Microsoft.Azure.Batch.Apps.Cloud.CloudFileNotFoundException">The file does not exist in user storage.</exception>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.FileServiceExtensions.DownloadFile(Microsoft.Azure.Batch.Apps.Cloud.IFileService,Microsoft.Azure.Batch.Apps.Cloud.FileContainer,Microsoft.Azure.Batch.Apps.Cloud.IFileSpecifier,System.String)">
+            <summary>
+            Downloads a file from cloud storage to local storage on the compute node.
+            </summary>
+            <param name="fileService">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.IFileService"/>.</param>
+            <param name="fileContainer">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.FileContainer"/> containing the file to download.</param>
+            <param name="fileSpecifier">Details of the file to download.</param>
+            <param name="destinationPath">The destination path to which to download the file.</param>
+            <exception cref="T:Microsoft.Azure.Batch.Apps.Cloud.CloudFileNotFoundException">The file does not exist in the specified container.</exception>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.IFileSpecifier">
+            <summary>
+            Identifies a file to be processed as part of a job.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.IFileSpecifier.Name">
+            <summary>
+            Gets the name of the file to be processed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.IFileSpecifier.Timestamp">
+            <summary>
+            Gets the timestamp of the file to be processed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.IFileSpecifier.OriginalPath">
+            <summary>
+            Gets the original path of the file, from which it was uploaded.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.IFileSpecifier.Hash">
+            <summary>
+            Gets a hash code identifying the file.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ICloudEnvironmentService">
+            <summary>
+            A service for obtaining information about the cloud environment.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.ICloudEnvironmentService.GetHostNode">
+            <summary>
+            Gets the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ICloudNode"/> on which the application is running.
+            </summary>
+            <returns>The ICloudNode on which the application is running.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.ICloudEnvironmentService.GetGroupNodes">
+            <summary>
+            Gets the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ICloudNode"/> objects representing the nodes in the instance
+            group containing the node on which the application is running.
+            </summary>
+            <returns>The nodes in the local instance group.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ICloudNode">
+            <summary>
+            Contains information about a cloud compute node.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ICloudNode.NodeType">
+            <summary>
+            Gets the kind of compute node.  This identifies the type of processing that is
+            carried on on this node.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ICloudNode.Id">
+            <summary>
+            Gets the cloud platform's identifier for the node, e.g. name or GUID.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ICloudNode.SmbAddress">
+            <summary>
+            Gets the IP address on which the node provides SMB (Server Management Block)
+            services such as file sharing.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.IFile">
+            <summary>
+            Represents a blob in cloud storage.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.IFile.Content">
+            <summary>
+            Gets the content of the blob.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.IFile.Timestamp">
+            <summary>
+            Gets the timestamp of the blob.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.IFileService">
+            <summary>
+            A service for retrieving file (blob) data from cloud storage.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.IFileService.GetFile(Microsoft.Azure.Batch.Apps.Cloud.FileContainer,Microsoft.Azure.Batch.Apps.Cloud.IFileSpecifier)">
+            <summary>
+            Gets a file from user or job storage.
+            </summary>
+            <param name="fileContainer">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.FileContainer"/> from which to retrieve the file.</param>
+            <param name="fileSpecifier">Details of the file to retrieve.</param>
+            <returns>An <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.IFile"/> containing the file content and metadata.</returns>
+            <exception cref="T:Microsoft.Azure.Batch.Apps.Cloud.CloudFileNotFoundException">The file does not exist in the specified container.</exception>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.IJob">
+            <summary>
+            Contains information about an Azure Batch job.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.IJob.JobId">
+            <summary>
+            Gets the unique identifier of the job.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.IJob.JobType">
+            <summary>
+            Gets the job type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.IJob.JobSettings">
+            <summary>
+            Gets the job settings string provided by the client.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.IJob.Parameters">
+            <summary>
+            Gets the job parameters provided by the client.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.IJob.Files">
+            <summary>
+            Gets the collection of files to be processed as part of this job.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.IJob.PrimaryFile">
+            <summary>
+            Gets the name of the 'master' file for the job.
+            </summary>
+            <remarks>
+            In many cases a job refers to a single file and that is the primary file.
+            When a job works on multiple files, there is typically one 'project' or
+            'script' file that describes how the other files are to be processed, in which
+            case that should be the primary file.  However, the Batch Apps framework does not
+            assign any special significance to the primary file; it is just a hint from
+            the application client to the job splitter.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.IJob.SubmitterName">
+            <summary>
+            Gets the user who submitted the job.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ILog">
+            <summary>
+            Provides message and error logging facilities.
+            </summary>
+            <remarks>
+            Typically you will not invoke <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/> methods directly but
+            will use the more convenient extension methods in <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions"/>.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.ILog.Log(Microsoft.Azure.Batch.Apps.Cloud.LogLevel,Microsoft.Azure.Batch.Apps.Cloud.LogVisibility,System.Exception,System.String)">
+            <summary>
+            Logs the specified message.
+            </summary>
+            <param name="level">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.LogLevel"/> associated with the message.</param>
+            <param name="visibility">Specifies whether the message should be visible to users via
+            Mission Control or the management API, or logged only to the cloud diagnostic store.</param>
+            <param name="exception">The exception, if any, associated with this message.</param>
+            <param name="message">The message to be logged.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ITask">
+            <summary>
+            Contains information about an Azure Batch task.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ITask.TaskId">
+            <summary>
+            Gets the identifier of the task within its parent job.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ITask.TaskIndex">
+            <summary>
+            Gets a numeric index associated with the task.  The significance of
+            this is application-defined.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ITask.IsMerge">
+            <summary>
+            Gets whether this is the merge task for the job.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ITask.RequiredFiles">
+            <summary>
+            Gets the collection of files that are needed for this task to
+            be processed.
+            </summary>
+            <remarks>
+            The Batch Apps framework downloads these files to local storage on the compute
+            node before invoking the task processor.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ITask.Parameters">
+            <summary>
+            Gets the parameters specified for this task.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ITask.JobId">
+            <summary>
+            Gets the unique identifier of the task's parent job.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ITask.JobType">
+            <summary>
+            Gets the job type of the task's parent job.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ITask.DequeueCount">
+            <summary>
+            Gets the number of times this task has been dequeued for processing.
+            </summary>
+            <remarks>
+            The Batch Apps framework automatically retries tasks before failing them.
+            You can use the DequeueCount property if you want to take additional actions
+            or adjust your processing when retrying, for example to output additional
+            diagnostic information.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ITask.Stage">
+            <summary>
+            Gets the stage of which the task is a part.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.JobResult">
+            <summary>
+            Specifies the result of a job.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.JobResult.OutputFile">
+            <summary>
+            Gets or sets the file containing the job output.
+            </summary>
+            <remarks>
+            The Batch Apps framework automatically uploads this file from local
+            storage to cloud storage from where it can be retrieved using the
+            management API.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.JobResult.PreviewFile">
+            <summary>
+            Gets or sets the file containing the job preview, if any.
+            </summary>
+            <remarks>
+            If this property is specified, the Batch Apps framework automatically
+            uploads this file from local storage to cloud storage from where it 
+            can be retrieved using the management API.
+            </remarks>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.JobSplitSettings">
+            <summary>
+            Provides context for job splitters when the framework invokes the
+            <see cref="M:Microsoft.Azure.Batch.Apps.Cloud.JobSplitter.Split(Microsoft.Azure.Batch.Apps.Cloud.IJob,Microsoft.Azure.Batch.Apps.Cloud.JobSplitSettings)"/> method.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.JobSplitSettings.ServiceProvider">
+            <summary>
+            Gets an <see cref="T:System.IServiceProvider"/> which can be used to access
+            framework services.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.JobSplitter">
+            <summary>
+            Splits a job into a set of parallelisable tasks.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.JobSplitter.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.JobSplitter"/> type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.JobSplitter.Split(Microsoft.Azure.Batch.Apps.Cloud.IJob,Microsoft.Azure.Batch.Apps.Cloud.JobSplitSettings)">
+            <summary>
+            When overridden in a derived class, splits a job into a set of
+            parallelisable tasks.
+            </summary>
+            <param name="job">The job to be split.</param>
+            <param name="settings">Contains information and services about the split request.</param>
+            <returns>A sequence of tasks to be run on compute nodes.</returns>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.JobSplitter.Log">
+            <summary>
+            Gets the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/> for user or diagnostic logging.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions">
+            <summary>
+            Contains extension methods for <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Debug(Microsoft.Azure.Batch.Apps.Cloud.ILog,System.String,System.Object[])">
+            <summary>
+            Logs a set of values using the specified format information at Debug level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+            <remarks>Debug logging is turned off by default.</remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Debug(Microsoft.Azure.Batch.Apps.Cloud.ILog,System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs an exception and a set of values using the specified format information at Debug level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="exception">The exception to be logged.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+            <remarks>Debug logging is turned off by default.</remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Info(Microsoft.Azure.Batch.Apps.Cloud.ILog,System.String,System.Object[])">
+            <summary>
+            Logs a set of values using the specified format information at Info level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+            <remarks>The log message is user visible.</remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Info(Microsoft.Azure.Batch.Apps.Cloud.ILog,System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs an exception and a set of values using the specified format information at Info level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="exception">The exception to be logged.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+            <remarks>The log message is user visible.</remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Info(Microsoft.Azure.Batch.Apps.Cloud.ILog,Microsoft.Azure.Batch.Apps.Cloud.LogVisibility,System.String,System.Object[])">
+            <summary>
+            Logs a set of values using the specified format information at Info level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="visibility">The visibility of the log message.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Info(Microsoft.Azure.Batch.Apps.Cloud.ILog,Microsoft.Azure.Batch.Apps.Cloud.LogVisibility,System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs an exception and a set of values using the specified format information at Info level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="visibility">The visibility of the log message.</param>
+            <param name="exception">The exception to be logged.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Warn(Microsoft.Azure.Batch.Apps.Cloud.ILog,System.String,System.Object[])">
+            <summary>
+            Logs a set of values using the specified format information at Warning level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+            <remarks>The log message is user visible.</remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Warn(Microsoft.Azure.Batch.Apps.Cloud.ILog,System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs an exception and a set of values using the specified format information at Warning level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="exception">The exception to be logged.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+            <remarks>The log message is user visible.</remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Warn(Microsoft.Azure.Batch.Apps.Cloud.ILog,Microsoft.Azure.Batch.Apps.Cloud.LogVisibility,System.String,System.Object[])">
+            <summary>
+            Logs a set of values using the specified format information at Warning level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="visibility">The visibility of the log message.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Warn(Microsoft.Azure.Batch.Apps.Cloud.ILog,Microsoft.Azure.Batch.Apps.Cloud.LogVisibility,System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs an exception and a set of values using the specified format information at Warning level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="visibility">The visibility of the log message.</param>
+            <param name="exception">The exception to be logged.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Error(Microsoft.Azure.Batch.Apps.Cloud.ILog,System.String,System.Object[])">
+            <summary>
+            Logs a set of values using the specified format information at Error level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+            <remarks>The log message is user visible.</remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Error(Microsoft.Azure.Batch.Apps.Cloud.ILog,System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs an exception and a set of values using the specified format information at Error level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="exception">The exception to be logged.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+            <remarks>The log message is user visible.</remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Error(Microsoft.Azure.Batch.Apps.Cloud.ILog,Microsoft.Azure.Batch.Apps.Cloud.LogVisibility,System.String,System.Object[])">
+            <summary>
+            Logs a set of values using the specified format information at Error level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="visibility">The visibility of the log message.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Error(Microsoft.Azure.Batch.Apps.Cloud.ILog,Microsoft.Azure.Batch.Apps.Cloud.LogVisibility,System.Exception,System.String,System.Object[])">
+            <summary>
+            Logs an exception and a set of values using the specified format information at Error level.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="visibility">The visibility of the log message.</param>
+            <param name="exception">The exception to be logged.</param>
+            <param name="format">A composite format string.</param>
+            <param name="args">The values to write using the format.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Time(Microsoft.Azure.Batch.Apps.Cloud.ILog,System.String)">
+            <summary>
+            Logs how long a code block took to run.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="message">A descriptive message to associate with the timing information.</param>
+            <returns>An object which when disposed logs the timing information.</returns>
+            <remarks>The timing information is logged at Debug level.  Debug logging is turned off by
+            default, so to see timing information you must either turn on debug logging or use
+            the overload which takes a LogLevel.  Timing messages are not user visible.</remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.LogExtensions.Time(Microsoft.Azure.Batch.Apps.Cloud.ILog,System.String,Microsoft.Azure.Batch.Apps.Cloud.LogLevel)">
+            <summary>
+            Logs how long a code block took to run.
+            </summary>
+            <param name="log">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/>.</param>
+            <param name="message">A descriptive message to associate with the timing information.</param>
+            <param name="level">The <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.LogLevel"/> of the timing message (typically Info).</param>
+            <returns>An object which when disposed logs the timing information.</returns>
+            <remarks>Timing messages are not user visible.</remarks>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.LogLevel">
+            <summary>
+            The level of a log message.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.LogLevel.Debug">
+            <summary>
+            The message is for debugging.  By default, debug logging is turned off
+            and messages at this level are not logged.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.LogLevel.Info">
+            <summary>
+            The message is informational.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.LogLevel.Warning">
+            <summary>
+            The message is a warning.  Use this level for conditions which are unexpected
+            but do not prevent you from processing the workload.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.LogLevel.Error">
+            <summary>
+            The message is an error.  Use this level for conditions which prevent you from
+            processing the workload.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.LogVisibility">
+            <summary>
+            The visibility of a log message.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.LogVisibility.Diagnostic">
+            <summary>
+            The message is stored in the diagnostic log.  It is visible to
+            developers and administrators using cloud management tools, but not
+            via the Batch Apps portal or API.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.LogVisibility.User">
+            <summary>
+            The message can be seen by users.  It will be displayed in Mission
+            Control, and can be retrieved using the management API for display in
+            a client application or portal.  (The message is also stored in the
+            diagnostic log.)
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.MergeTask">
+            <summary>
+            Contains <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier"/> objects representing common merge options.
+            </summary>
+            <remarks>You can also configure the merge task manually in the job splitter by
+            returning a task with IsMerge set to true.</remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.MergeTask.Default">
+            <summary>
+            Specifies that the job should have a default merge task; that is, merge code will
+            run, but the framework will configure the merge task automatically.  This is equivalent
+            to not returning a merge task.
+            </summary>
+            <returns>A <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier"/> representing a default merge task.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.MergeTask.Skip">
+            <summary>
+            Specifies that the job does not have a merge task; that is, merge code will
+            not run and there will be no job output.
+            </summary>
+            <returns>A <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier"/> representing the absence of a merge task.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.MpiCloudApplication">
+            <summary>
+            Represents a <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.CloudApplication"/> that runs using the MPI
+            (Message Passing Interface) framework.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.MpiCloudApplication.TaskProcessorType">
+            <summary>
+            Gets or sets the type of the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.MpiTaskProcessor"/> for this application.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.MpiJobProcessResult">
+            <summary>
+            Specifies the result of a MPI (Message Passing Interface) job.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.MpiJobProcessResult.FromExternalProcessResult(Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessResult,System.String)">
+            <summary>
+            Creates a <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.MpiJobProcessResult"/> based on the result of an external process
+            using standard conventions.
+            </summary>
+            <param name="externalProcessResult">The result of the external process.</param>
+            <param name="outputFile">The file created by the external process which should
+            be saved as task outputs.</param>
+            <returns>A MpiJobProcessResult with Success, ProcessorOutput and OutputFile based
+            on the external process result.</returns>
+            <remarks>
+            If you want to save preview or log files, add them manually to the 
+            AdditionalFiles collection of the returned MpiJobProcessResult.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.MpiJobProcessResult.Success">
+            <summary>
+            Gets or sets the outcome of job processing.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.MpiJobProcessResult.ProcessorOutput">
+            <summary>
+            Gets or sets the text to be logged as the output of the external processing program.
+            </summary>
+            <remarks>This is typically <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessResult.StandardOutput"/> or a combination
+            of StandardOutput and <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessResult.StandardError"/>.</remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.MpiJobProcessResult.OutputFile">
+            <summary>
+            Gets or sets the file containing the job output.
+            </summary>
+            <remarks>
+            The Batch Apps framework automatically uploads this file from local
+            storage to cloud storage from where it can be retrieved using the
+            management API.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.MpiJobProcessResult.PreviewFile">
+            <summary>
+            Gets or sets the file containing the job preview, if any.
+            </summary>
+            <remarks>
+            If this property is specified, the Batch Apps framework automatically
+            uploads this file from local storage to cloud storage from where it 
+            can be retrieved using the management API.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.MpiJobProcessResult.AdditionalFiles">
+            <summary>
+            Gets or sets any other files to be saved in cloud storage.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.MpiTaskProcessor">
+            <summary>
+            Processes a MPI (Message Passing Interface) task.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessor">
+            <summary>
+            Processes an individual task within a job.
+            </summary>
+            <remarks>
+            Do not inherit from this class directly; inherit from <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ParallelTaskProcessor"/>
+            or <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.MpiTaskProcessor"/> instead.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessor.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessor"/> type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessor.LocalPath(System.String)">
+            <summary>
+            Gets the full path to a file in the <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessor.LocalStoragePath"/>.
+            </summary>
+            <param name="file">The name of the file.</param>
+            <returns>The full path to the file.</returns>
+            <remarks>This is a convenience helper to make your code a bit more readable than using Path.Combine.</remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessor.ExecutablePath(System.String)">
+            <summary>
+            Gets the full path to a file in the <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessor.ExecutablesPath"/> (application image virtual disk).
+            </summary>
+            <param name="file">The relative path to the file from the virtual disk root.</param>
+            <returns>The full path to the file.</returns>
+            <remarks>This is a convenience helper to make your code a bit more readable than using Path.Combine.</remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessor.Log">
+            <summary>
+            Gets the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ILog"/> for user or diagnostic logging.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessor.ExecutablesPath">
+            <summary>
+            Gets the path to the application image virtual disk where it has
+            been mounted in the compute node.
+            </summary>
+            <remarks>
+            The ExecutablesPath property points to the root of the virtual disk.
+            Depending on how the application image is laid out on the VHD,
+            the executables may be in a subdirectory.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessor.LocalStoragePath">
+            <summary>
+            Gets the directory where the framework has downloaded the files to be
+            processed, and from which the framework expects to upload the result files.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.MpiTaskProcessor.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.MpiTaskProcessor"/> type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.MpiTaskProcessor.RunExternalJobProcess(Microsoft.Azure.Batch.Apps.Cloud.IJob,Microsoft.Azure.Batch.Apps.Cloud.TaskExecutionSettings)">
+            <summary>
+            When overridden in a derived class, processes the MPI task.
+            </summary>
+            <param name="job">The job to be processed.</param>
+            <param name="settings">Contains information about the processing request.</param>
+            <returns>The result of job processing.</returns>
+            <remarks>
+            Implementations typically invoke a program from the <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessor.ExecutablesPath"/>
+            using the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess"/> helper class.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.MpiTaskProcessor.GetApplicationVersion(Microsoft.Azure.Batch.Apps.Cloud.IJob)">
+            <summary>
+            Gets the version of the application image for the given job.
+            </summary>
+            <param name="job">The job for which the application version is required.</param>
+            <returns>A version string, or null if the application is not versioned.</returns>
+            <remarks>The base implementation always returns null.  Override it if you
+            need to support multiple side-by-side application images.</remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.MpiTaskProcessor.PercentageComplete">
+            <summary>
+            When overridden in a derived class, gets the percentage of the current task that has been completed.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ParallelCloudApplication">
+            <summary>
+            Represents a <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.CloudApplication"/> where the workload is
+            embarrassingly parallel and where a job splitter is used to define
+            the parallelisable tasks.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ParallelCloudApplication.JobSplitterType">
+            <summary>
+            Gets or sets the type of the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.JobSplitter"/> for this application.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.ParallelCloudApplication.TaskProcessorType">
+            <summary>
+            Gets or sets the type of the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ParallelTaskProcessor"/> for this application.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.ParallelTaskProcessor">
+            <summary>
+            Processes an individual task within an embarrassingly parallel job.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.ParallelTaskProcessor.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ParallelTaskProcessor"/> type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.ParallelTaskProcessor.RunExternalTaskProcess(Microsoft.Azure.Batch.Apps.Cloud.ITask,Microsoft.Azure.Batch.Apps.Cloud.TaskExecutionSettings)">
+            <summary>
+            When overridden in a derived class, processes a task.
+            </summary>
+            <param name="task">The task to be processed.</param>
+            <param name="settings">Contains information about the processing request.</param>
+            <returns>The result of task processing.</returns>
+            <remarks>
+            Implementations typically invoke a program from the <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessor.ExecutablesPath"/>
+            using the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess"/> helper class.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.ParallelTaskProcessor.RunExternalMergeProcess(Microsoft.Azure.Batch.Apps.Cloud.ITask,Microsoft.Azure.Batch.Apps.Cloud.TaskExecutionSettings)">
+            <summary>
+            When overridden in a derived class, processes the merge task.
+            </summary>
+            <param name="mergeTask">The merge task.</param>
+            <param name="settings">Contains information about the processing request.</param>
+            <returns>The job outputs resulting from the merge process.</returns>
+            <remarks>
+            Implementations typically invoke a program from the <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessor.ExecutablesPath"/>
+            using the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcess"/> helper class to perform the merge.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.ParallelTaskProcessor.GetApplicationVersion(Microsoft.Azure.Batch.Apps.Cloud.ITask)">
+            <summary>
+            Gets the version of the application image for the given task.
+            </summary>
+            <param name="task">The task for which the application version is required.</param>
+            <returns>A version string, or null if the application is not versioned.</returns>
+            <remarks>The base implementation always returns null.  Override it if you
+            need to support multiple side-by-side application images.</remarks>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.TaskDependency">
+            <summary>
+            Describes a dependency of one task on another.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.TaskDependency.OnId(System.Int32)">
+            <summary>
+            Gets a <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.TaskDependency"/> representing dependency on a
+            specific <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.ITask.TaskId"/>.
+            </summary>
+            <param name="taskId">The task ID to depend on.</param>
+            <returns>An object representing a dependency on the task with the
+            specified ID.</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.TaskExecutionSettings">
+            <summary>
+            Provides context for task processors when the framework invokes a
+            task processing method.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskExecutionSettings.CancellationToken">
+            <summary>
+            Gets a cancellation token which the framework will use to cancel task
+            processing.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskExecutionSettings.ServiceProvider">
+            <summary>
+            Gets an <see cref="T:System.IServiceProvider"/> which can be used to access
+            framework services.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.TaskOutputFile">
+            <summary>
+            Represents a file created by an external program which is to be
+            saved in cloud storage as a task output.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskOutputFile.Kind">
+            <summary>
+            Gets or sets the kind of task output that this file contains.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskOutputFile.FileName">
+            <summary>
+            Gets or sets the name of the file to be saved in cloud storage.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.TaskOutputFileKind">
+            <summary>
+            The kind of output in a <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.TaskOutputFile"/>.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.TaskOutputFileKind.Output">
+            <summary>
+            The file contains a primary output of the task, which will be used
+            by the merge task to create the overall job output.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.TaskOutputFileKind.Preview">
+            <summary>
+            The file contains a preview of the task output, such as a thumbnail.
+            The file is not required for subsequent tasks, but will be made
+            available to the job owner through the management API.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.TaskOutputFileKind.Log">
+            <summary>
+            The file contains log information about the task.  The file is not
+            required for subsequent tasks, but will be available to the job owner
+            through the management API.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.TaskOutputFileKind.Intermediate">
+            <summary>
+            The file contains intermediate output of the external program, which is not
+            required to complete the job but which is to be kept for other purposes.
+            A typical use case for this is if the external program failed and you want
+            to preserve some of its working files for diagnostic purposes.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessResult">
+            <summary>
+            The result of processing a single (non-merge) task.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessResult.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessResult"/> type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessResult.FromExternalProcessResult(Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessResult,System.String[])">
+            <summary>
+            Creates a <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessResult"/> based on the result of an external process
+            using standard conventions.
+            </summary>
+            <param name="externalProcessResult">The result of the external process.</param>
+            <param name="outputFiles">The files created by the external process which should
+            be saved as task outputs.</param>
+            <returns>A TaskProcessResult with Success, ProcessorOutput and OutputFiles based
+            on the external process result.</returns>
+            <remarks>
+            Any files named as output files are added to the OutputFiles collection with a kind of
+            <see cref="F:Microsoft.Azure.Batch.Apps.Cloud.TaskOutputFileKind.Output"/>.  If you want to save preview or log files,
+            add them manually to the OutputFiles collection of the returned TaskProcessResult.
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessResult.Success">
+            <summary>
+            Gets or sets the outcome of task processing.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessResult.ProcessorOutput">
+            <summary>
+            Gets or sets the text to be logged as the output of the external processing program.
+            </summary>
+            <remarks>This is typically <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessResult.StandardOutput"/> or a combination
+            of StandardOutput and <see cref="P:Microsoft.Azure.Batch.Apps.Cloud.ExternalProcessResult.StandardError"/>.</remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessResult.OutputFiles">
+            <summary>
+            Gets or sets the list of files to be saved in cloud storage.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessResult.StillProcessing">
+            <summary>
+            Gets or sets whether the task is still being processed asynchronously by
+            a resource outside the compute node.
+            </summary>
+            <remarks>This is an advanced member and should not be used by normal task processors.</remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessResult.RequestedChargeTime">
+            <summary>
+            Gets or sets the amount of time for which the task processor would like the
+            user to be billed, for example if the task processor uses an external service
+            which incurs usage charges.
+            </summary>
+            <remarks>This is an advanced member and should not be used by normal task processors.</remarks>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessSuccess">
+            <summary>
+            Indicates whether task processing was successful.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessSuccess.Succeeded">
+            <summary>
+            The task was processed successfully.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessSuccess.RetryableFailure">
+            <summary>
+            Task processing failed, but the task should be retried automatically.
+            This is appropriate for transient failures such as failure to contact
+            a licence server.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessSuccess.PermanentFailure">
+            <summary>
+            Task processing failed, and the task should not be retried automatically.
+            The task may still be restarted manually.  This is appropriate for errors that
+            require intervention to correct, such as a corrupt file.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Batch.Apps.Cloud.TaskProcessSuccess.NodeFailure">
+            <summary>
+            Task processing failed, and may have rendered the compute node unusable
+            for further tasks.  The task may still be restarted manually.  This is
+            appropriate for system-level error conditions such as out of memory errors.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier">
+            <summary>
+            Describes a task to be queued for processing.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier"/> type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier.WithAllJobParameters(Microsoft.Azure.Batch.Apps.Cloud.IJob)">
+            <summary>
+            Copies all job parameters to the task.
+            </summary>
+            <param name="job">The job whose parameters are to be copied.</param>
+            <returns>The task specifier, with its Parameters collection updated with all job parameters.</returns>
+            <remarks>If you have already set up parameters on the task, these will
+            not be overwritten; only job parameters whose keys are not already present
+            on the task will be copied.</remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier.WithJobParameters(Microsoft.Azure.Batch.Apps.Cloud.IJob,System.String[])">
+            <summary>
+            Copies the specified parameters from the job to the task.
+            </summary>
+            <param name="job">The job from which to copy parameters.</param>
+            <param name="parameters">The names of the parameters to copy.</param>
+            <returns>The task specifier, with its Parameters collection updated with
+            the specified job parameters.</returns>
+            <remarks>If the parameters with these keys are already set on the task,
+            they are overwritten with the values from the job.</remarks>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier.RequiringAllJobFiles(Microsoft.Azure.Batch.Apps.Cloud.IJob)">
+            <summary>
+            Specifies that the task requires all job files.
+            </summary>
+            <param name="job">The job whose files are required.</param>
+            <returns>The task specifier, with its RequiredFiles collection updated with all job files.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier.RequiringJobFiles(Microsoft.Azure.Batch.Apps.Cloud.IJob,System.String[])">
+            <summary>
+            Specifies that the task requires specific job files by name.
+            </summary>
+            <param name="job">The job whose files are required.</param>
+            <param name="fileNames">The files required for the task</param>
+            <returns>The task specifier, with its RequiredFiles collection updated with the specified job files.</returns>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier.TaskId">
+            <summary>
+            Gets or sets the identifier of the task within its parent job.
+            </summary>
+            <remarks>Task IDs are normally populated automatically for you.  If you set task IDs explicitly,
+            they must be a continuous sequence of values starting at 1.</remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier.TaskIndex">
+            <summary>
+            Gets or sets a numeric index associated with the task.  The significance of
+            this is application-defined.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier.IsMerge">
+            <summary>
+            Gets or sets whether this is the merge task for the job.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier.RequiredFiles">
+            <summary>
+            Gets or sets the collection of files that are needed for this task to
+            be processed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier.Parameters">
+            <summary>
+            Gets or sets the application-defined parameters for this task.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier.IgnoreMissingFiles">
+            <summary>
+            Gets or sets whether the Batch Apps framework should attempt to process the
+            task even if some of the required files are not in cloud storage.  The default
+            is false.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier.Stage">
+            <summary>
+            Gets or sets the stage of which the task is a part.
+            </summary>
+            <remarks>Stages support jobs where later tasks cannot proceed until earlier tasks
+            have completed -- for example, a rendering workload where a set of intermediate
+            files must be prepared before the main render can be undertaken.</remarks>
+        </member>
+        <member name="P:Microsoft.Azure.Batch.Apps.Cloud.TaskSpecifier.DependsOn">
+            <summary>
+            Gets or sets whether this task depends on another task.
+            </summary>
+        </member>
+    </members>
+</doc>

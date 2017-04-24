@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>3ad987bf-f0fa-40bd-9dae-4af3a5fe9cc7</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Nessos.FsPickler</RootNamespace>
+    <AssemblyName>FsPickler</AssemblyName>
+    <Name>FsPickler</Name>
+    <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <Tailcalls>false</Tailcalls>
+    <OutputPath Condition="'$(OutputPath)' == ''">bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;OPTIMIZE_FSHARP;EMIT_IL</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Debug\FsPickler.xml</DocumentationFile>
+    <OtherFlags>
+    </OtherFlags>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;PROTECT_STACK_OVERFLOWS;OPTIMIZE_FSHARP;SERIALIZE_STRONG_NAMES;EMIT_IL</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Release\FsPickler.xml</DocumentationFile>
+    <KeyOriginatorFile Condition="Exists('../../Lib/key.snk')">../../Lib/key.snk</KeyOriginatorFile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup>
+    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PerfTests|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <DefineConstants>TRACE;PROTECT_STACK_OVERFLOWS;OPTIMIZE_FSHARP;SERIALIZE_STRONG_NAMES;EMIT_IL</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Release\FsPickler.xml</DocumentationFile>
+    <KeyOriginatorFile Condition="Exists('../../Lib/key.snk')">../../Lib/key.snk</KeyOriginatorFile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <OutputPath>bin\PerfTests\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(VisualStudioVersion)' == '11.0' Or $(OS) != 'Windows_NT'">
+    <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <Tailcalls>false</Tailcalls>
+    <OutputPath Condition="'$(OutputPath)' == ''">bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;OPTIMIZE_FSHARP;EMIT_IL</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Debug\FsPickler.xml</DocumentationFile>
+    <OtherFlags />
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;PROTECT_STACK_OVERFLOWS;OPTIMIZE_FSHARP;SERIALIZE_STRONG_NAMES;EMIT_IL</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Release\FsPickler.xml</DocumentationFile>
+    <KeyOriginatorFile Condition="Exists('../../Lib/key.snk')">../../Lib/key.snk</KeyOriginatorFile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PerfTests|x64' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <DefineConstants>TRACE;PROTECT_STACK_OVERFLOWS;OPTIMIZE_FSHARP;SERIALIZE_STRONG_NAMES;EMIT_IL</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Release\FsPickler.xml</DocumentationFile>
+    <KeyOriginatorFile Condition="Exists('../../Lib/key.snk')">../../Lib/key.snk</KeyOriginatorFile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <OutputPath>bin\PerfTests\</OutputPath>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
+  <ItemGroup>
+    <Compile Include="assemblyInfo.fs" />
+    <Compile Include="Utils.fs" />
+    <Compile Include="Hashing.fs" />
+    <Compile Include="Header.fs" />
+    <Compile Include="Pickler.fsi" />
+    <Compile Include="Pickler.fs" />
+    <Compile Include="Types.fs" />
+    <Compile Include="PicklerUtils.fs" />
+    <Compile Include="Emit.fs" />
+    <Compile Include="BasePicklers.fs" />
+    <Compile Include="ReflectionPicklers.fs" />
+    <Compile Include="DotNetPicklers.fs" />
+    <Compile Include="FSharpPicklers.fs" />
+    <Compile Include="ArrayPickler.fs" />
+    <Compile Include="TuplePicklers.fs" />
+    <Compile Include="CombinatorImpls.fs" />
+    <Compile Include="TypeShape.fs" />
+    <Compile Include="PicklerResolution.fs" />
+    <Compile Include="PicklerCache.fs" />
+    <Compile Include="FsPickler.fs" />
+    <Compile Include="Combinators.fs" />
+    <Compile Include="ExtensionMethods.fs" />
+    <None Include="Benchmark.fsx" />
+    <None Include="Test.fsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+</Project>

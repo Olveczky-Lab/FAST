@@ -1,0 +1,1198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>FsCoreSerializer</name></assembly>
+<members>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FsCoreSerializer.FsCoreSerializer.ResolveFormatter(System.Type)">
+<summary>
+ resolve formatter for a given type
+</summary>
+</member>
+<member name="M:FsCoreSerializer.FsCoreSerializer.RegisterTypeSerializer(FsCoreSerializer.ITypeFormatter)">
+<summary>
+ register custom type serialization rules; useful for FSI type serializations
+</summary>
+</member>
+<member name="M:FsCoreSerializer.FsCoreSerializer.RegisterGenericFormatter(FsCoreSerializer.IGenericFormatterFactory)">
+<summary>
+ register custom serialization rules for generic types
+</summary>
+</member>
+<member name="M:FsCoreSerializer.FsCoreSerializer.RegisterFormatterFactory(FsCoreSerializer.IFormatterFactory)">
+<summary>
+ register a formatter factory
+</summary>
+</member>
+<member name="M:FsCoreSerializer.FsCoreSerializer.RegisterFormatter(FsCoreSerializer.Formatter)">
+<summary>
+ register an individual formatter
+</summary>
+</member>
+<member name="M:FsCoreSerializer.FsCoreSerializer.GetObjWriter(System.IO.Stream,Microsoft.FSharp.Core.FSharpOption{System.Object},Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ initializes a writer object for given stream
+</summary>
+</member>
+<member name="M:FsCoreSerializer.FsCoreSerializer.GetObjReader(System.IO.Stream,Microsoft.FSharp.Core.FSharpOption{System.Object},Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ initializes a reader object for given stream
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FsCoreSerializer.IFormatterFactory">
+<summary>
+ A factory pattern for precomputing formatters
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:FsCoreSerializer.IFsCoreSerializable">
+<summary>
+ an ISerializable-like pattern for describing serialization rules in new types
+ serialization is performed by providing direct access to the underlying stream
+ through the Reader/Writer types.
+
+ Types implementing this interface require a constructor &apos;new (reader : Reader)&apos;
+</summary>
+</member>
+<member name="T:FsCoreSerializer.IGenericFormatterFactory">
+<summary>
+ A factory pattern for generating formatters for generic types
+ any type implementing this interface must declare a method
+
+     Create&lt;&apos;T1, ... , &apos;Tn | constraints&gt; : (Type -&gt; Lazy&lt;Formatter&gt;) -&gt; Formatter
+
+ Generic formatters are registered and resolved at runtime. 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FsCoreSerializer.Reader.StreamingContext">
+<summary>
+ Access the current streaming context.
+</summary>
+</member>
+<member name="P:FsCoreSerializer.Reader.BR">
+<summary>
+ BinaryReader to the underlying stream.
+</summary>
+</member>
+<member name="M:FsCoreSerializer.Reader.ResolveFormatter(System.Type)">
+<summary>
+ Resolves a formatter for the given type.
+</summary>
+</member>
+<member name="M:FsCoreSerializer.Reader.ReadObj">
+<summary>
+ Reads next object from the stream.
+ Object type is read from the stream and formatter resolved on the fly.
+</summary>
+</member>
+<member name="M:FsCoreSerializer.Reader.ReadObj(System.Type)">
+<summary>
+ Reads object of given type from the stream.
+</summary>
+</member>
+<member name="M:FsCoreSerializer.Reader.ReadObj(FsCoreSerializer.Formatter)">
+<summary>
+ Read object from stream using given formatter. Unsafe!
+</summary>
+</member>
+<member name="M:FsCoreSerializer.Reader.Read``1">
+<summary>
+ Reads object of given type from the stream.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FsCoreSerializer.Writer.StreamingContext">
+<summary>
+ Access the current streaming context.
+</summary>
+</member>
+<member name="P:FsCoreSerializer.Writer.BW">
+<summary>
+ BinaryWriter to the underlying stream.
+</summary>
+</member>
+<member name="M:FsCoreSerializer.Writer.WriteObj(System.Object)">
+<summary>
+ Writes given object to the stream.
+ Formatter type is resolved through reflection and recorded to the stream.
+</summary>
+</member>
+<member name="M:FsCoreSerializer.Writer.WriteObj(System.Type,System.Object)">
+<summary>
+ Writes given object of type &apos;t&apos; to the stream. Unsafe!
+</summary>
+</member>
+<member name="M:FsCoreSerializer.Writer.WriteObj(FsCoreSerializer.Formatter,System.Object)">
+<summary>
+ Write object to stream using given formatter. Unsafe!
+</summary>
+</member>
+<member name="M:FsCoreSerializer.Writer.Write``1(``0)">
+<summary>
+ Writes given object to the stream
+</summary>
+</member>
+<member name="M:FsCoreSerializer.Writer.ResolveFormatter(System.Type)">
+<summary>
+ Resolves a formatter for the given type.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FsCoreSerializer.ArrayFormatter">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FsCoreSerializer.BaseFormatters.Utils.writeKVPair``2(FsCoreSerializer.Writer,FsCoreSerializer.Formatter,FsCoreSerializer.Formatter,System.Int32,System.Collections.Generic.IEnumerable{System.Tuple{``0,``1}})">
+<summary>
+ length is fed as external argument to prevent unintented double evaluation of sequence
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FsCoreSerializer.BaseFormatters.Utils">
+
+</member>
+<member name="T:FsCoreSerializer.BaseFormatters">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FsCoreSerializer.ExtensionMethods">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FsCoreSerializer.FSharpFormatters">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FsCoreSerializer.FormatterResolution.YParametric``2(System.Collections.Concurrent.ConcurrentDictionary{``0,``1},Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.FSharpFunc{``0,System.Lazy{``1}},Microsoft.FSharp.Core.FSharpFunc{``0,``1}},``0)">
+<summary>
+ Y combinator with parametric recursion support
+</summary>
+</member>
+<member name="T:FsCoreSerializer.FormatterResolution">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FsCoreSerializer.ObjHeader">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FsCoreSerializer.Reflection.ReflectionImpl">
+
+</member>
+<member name="T:FsCoreSerializer.Reflection">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FsCoreSerializer.TypeShape">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FsCoreSerializer.Utils.Stream.CopyToArray(System.IO.Stream,System.Array)">
+<summary>
+ copy stream contents to preallocated array
+</summary>
+</member>
+<member name="M:FsCoreSerializer.Utils.Stream.WriteArray(System.IO.Stream,System.Array)">
+<summary>
+ block copy primitive array to stream
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FsCoreSerializer.Utils.Stream">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FsCoreSerializer.Utils.Atom">
+
+</member>
+<member name="T:FsCoreSerializer.Utils">
+
+</member>
+</members>
+</doc>

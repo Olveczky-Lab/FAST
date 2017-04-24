@@ -1,0 +1,36 @@
+TitanSpikes Algorithm Parameters
+
+Snippeting
+
+BlockSize
+EndPadding
+WPre/WPost (Changing this will potentially break Clustering Steps that have hardcoded the number of samples per spike to be 64)
+EventThreshold/ReturnThreshold
+num_samples_return (dead time between spikes)
+filter parameters (spikes bandpass and LFP downsample)
+
+Clustering (both Level1 and Level2)
+
+mintemp/maxtemp (could potentially make this more general)
+featurefunc (currently just scaled raw spike waveforms, could do pca, wavelets, etc.)
+numspikesperblock
+spc parameters (swcycles knn seed)
+
+Terminating
+minclussize
+recursive merging scoring function and threshold (currently change in SSE with a threshold of 20)
+
+Level2
+number of levels
+minclussize 
+minclusamp
+
+AutoSorter
+Segmentation fusion
+	Num Blocks per fusion and num overlap
+	link and node value functions
+	maxtempnum
+Straggler Distance function and Threshold
+
+Merger
+distance function and threshold (includes max tolerance for translation invariance)
