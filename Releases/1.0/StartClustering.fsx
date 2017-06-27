@@ -15,7 +15,7 @@ open AutoSortHelper
 
 let xn = XName.op_Implicit
 
-let cmdpath = @"& 'C:\Titanic\Clusterer"
+let cmdpath = @"& 'C:\Titanic\Clusterer" // location of clustering folder on Master/Worker computers
 
 let intdatahostip = "192.168.0.1:5900" // IP address : port number of RESTful service on data-server. Could also be formatted as "localhost:5900"
 
@@ -23,9 +23,9 @@ let extdatahostip = "192.168.0.1:5900" // IP address : port number of RESTful se
 
 let extdatahost = Remote extdatahostip
 
-let userpathlocal = @"\\192.168.0.1\Data" // local or network (samba) path to parent data directory on server
+let userpathlocal = @"\\192.168.0.1\X\Data" // local or share (samba) path to parent data directory on data-server
 
-let userpathremote = @"/root/Data" // path to parent data directory on server (used in queries to RESTful service)
+let userpathremote = @"X:\Data" // path to parent data directory on data-server (used in queries to RESTful service)
 let rat = "Rat1" // folder in which datasets to be clustered is stored
 let minclussize = 15
 let numblocksperazuretask = 200
