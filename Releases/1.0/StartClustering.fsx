@@ -1,7 +1,7 @@
-﻿#r "System.Xml.Linq"
-#r @"D:\Rajesh\Ephys\Data Analysis\FSharp\TitanSpikeSnippeter\SnippetMaster\bin\Release\SnippetMaster.exe"
-#r @"D:\Rajesh\Ephys\Data Analysis\FSharp\FsPickler\bin\Release\FsPickler.dll"
-#r @"D:\Rajesh\Ephys\Data Analysis\FSharp\TitanSpikeClusterer\TitanSpikeClusterer\bin\Release\TitanSpikeClusterer.exe"
+#r "System.Xml.Linq"
+#r @".\WorkerNodes\Clusterer\SnippetMaster.exe"
+#r @".\WorkerNodes\Clusterer\FsPickler.dll"
+#r @".\WorkerNodes\Clusterer\TitanSpikeClusterer.exe"
 
 open System.Xml.Linq
 open System.IO
@@ -17,16 +17,19 @@ let xn = XName.op_Implicit
 
 let cmdpath = @"& 'C:\Titanic\Clusterer"
 
-//let intdatahostip = "192.168.0.100:5900"
-let intdatahostip = "140.247.178.16:5900"
-let extdatahostip = "140.247.178.16:5900"
+let intdatahostip = "140.247.178.16:5900" // IP address : port number of RESTful service on data-server. Could also be formatted as "localhost:5900"
+
+let extdatahostip = "140.247.178.16:5900" // IP address : port number of RESTful service on data-server
+
 let extdatahost = Remote extdatahostip
-let userpathlocal = @"Y:\Data"
-let userpathremote = @"/root/data/asheshdhawale/Data"
-let rat = "Hindol"
+
+let userpathlocal = @"\\140.247.178.65\Data" // local or network (samba) path to parent data directory on server
+
+let userpathremote = @"/root/Data" // path to parent data directory on server (used in queries to RESTful service)
+let rat = "Dataset_1" // folder in which datasets to be clustered is stored
 let minclussize = 15
 let numblocksperazuretask = 200
-let cmdfile = @"D:\Rajesh\testcmds"
+let cmdfile = @"C:\cmds" // if clustering commands are to be saved to a text file (optional)
 if File.Exists(cmdfile) then File.Delete(cmdfile)
 
 let fnumsall () = 
@@ -299,42 +302,101 @@ let savemergerdetails fnums =
                 )
         )
 
-//For all channel groups
-//let fnums = 
-//  [|"635596782733480422"|]
-//  |> Array.map (fun fnum ->
-//    let esets = loadnTrodes (XElement.Load(sprintf @"%s\%s\%s\SnippeterSettings.xml" userpathlocal rat fnum).Element(xn "EIBElectrodePlacement"))
-//    fnum,(esets|>Array.map (fun (chgroup,xs) -> chgroup,Array.length xs))
-//  )
-
-////For select channel groups
+//For all channel groups (0 to 15) (comment if not using)
 let fnums = 
-  [|"635596782733480422",[|"0"|]|]
-  |> Array.map (fun (fnum,chgroups) ->
+  [|"635596782733480422";"636203370316423755"|]
+  |> Array.map (fun fnum ->
     let esets = loadnTrodes (XElement.Load(sprintf @"%s\%s\%s\SnippeterSettings.xml" userpathlocal rat fnum).Element(xn "EIBElectrodePlacement"))
-    fnum,chgroups|>Array.map (fun chgroup -> 
-        let _,xs = esets |> Array.find (fst>>(=)chgroup)
-        chgroup,Array.length xs
-    )
+    fnum,(esets|>Array.map (fun (chgroup,xs) -> chgroup,Array.length xs))
   )
 
-for (fnum,esets) in fnums do
+////For select channel groups (comment if not using)
+//let fnums = 
+//  [|"635596782733480422",[|"0";"2"|];"636203370316423755",[|"1";"2"|]|]
+//  |> Array.map (fun (fnum,chgroups) ->
+//    let esets = loadnTrodes (XElement.Load(sprintf @"%s\%s\%s\SnippeterSettings.xml" userpathlocal rat fnum).Element(xn "EIBElectrodePlacement"))
+//    fnum,chgroups|>Array.map (fun chgroup -> 
+//        let _,xs = esets |> Array.find (fst>>(=)chgroup)
+//        chgroup,Array.length xs
+//    )
+//  )
+
+
+// REFERENCE LIST OF FUNCTION CALLS. WE RECOMMEND YOU FOLLOW THE STEPS LISTED BELOW
+//for (fnum,esets) in fnums do
     //dispttl ()    
     //createDirs ()
-    for chgroup,nchans in esets do
+//    for chgroup,nchans in esets do
         //savecluscmdazure fnum chgroup nchans 1
-        //dispcluscmd fnum chgroup nchans 4
-        //disptermcmd fnum 15 chgroup nchans 4
+        //dispcluscmd fnum chgroup nchans 1 // increment cluster iteration from 1 to 4 (or beyond)
+        //disptermcmd fnum 15 chgroup nchans 1 // increment clustering iteration from 1 to 4 (or beyond)
         //displevel2cmd fnum chgroup nchans
         //printfn "%A" (fnum,chgroup)
         //writeclus2indx fnum chgroup
         //saveclus2cmdazure fnum chgroup nchans
         //dispclus2cmd fnum chgroup nchans
         //computeoffslevel2 fnum chgroup
-        dispautosortcmd fnum chgroup nchans
+        //dispautosortcmd fnum chgroup nchans
 
-saveautosortstimes fnums
-saveautosortmeta fnums
-allmergers 0.02 fnums //0.02 is the threshold for merging chains. Increase it to result in fewer mergers. Reasonable range is 0.0 - 0.1
-savel2stimes fnums
-savemergerdetails (fnums |> Array.map fst)
+//saveautosortstimes fnums
+//saveautosortmeta fnums
+//allmergers 0.02 fnums //0.02 is the threshold for merging chains. Increase it to result in fewer mergers. Reasonable range is 0.0 - 0.1
+//savel2stimes fnums
+//savemergerdetails (fnums |> Array.map fst)
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// UNCOMMENT AND RUN THE CODE BLOCKS LISTED STEP BY STEP.
+
+// STEP 1 (local step)
+//for (fnum,esets) in fnums do
+    //createDirs ()
+
+// STEP 2 (run output commands on master computer in powershell window)
+//for (fnum,esets) in fnums do
+//    for chgroup,nchans in esets do
+        //dispcluscmd fnum chgroup nchans 1
+        //disptermcmd fnum 15 chgroup nchans 1
+
+
+// STEP 3 (run output commands on master computer in powershell window)
+//for (fnum,esets) in fnums do
+//    for chgroup,nchans in esets do
+        //dispcluscmd fnum chgroup nchans 2
+        //disptermcmd fnum 15 chgroup nchans 2
+        
+// STEP 4 (run output commands on master computer in powershell window)
+//for (fnum,esets) in fnums do
+//    for chgroup,nchans in esets do
+        //dispcluscmd fnum chgroup nchans 3
+        //disptermcmd fnum 15 chgroup nchans 3
+        
+// STEP 5 (run output commands on master computer in powershell window)
+//for (fnum,esets) in fnums do
+//    for chgroup,nchans in esets do
+        //dispcluscmd fnum chgroup nchans 4
+        //disptermcmd fnum 15 chgroup nchans 4
+        
+// STEP 6 (run output commands on master computer in powershell window)
+//for (fnum,esets) in fnums do
+//    for chgroup,nchans in esets do
+        //displevel2cmd fnum chgroup nchans
+        
+// STEP 7 (run output commands on master computer in powershell window)
+//for (fnum,esets) in fnums do
+//    for chgroup,nchans in esets do
+        //writeclus2indx fnum chgroup
+        //dispclus2cmd fnum chgroup nchans
+        
+// STEP 8 (run output commands on master computer in powershell window)
+//for (fnum,esets) in fnums do
+//    for chgroup,nchans in esets do
+        //computeoffslevel2 fnum chgroup
+        //dispautosortcmd fnum chgroup nchans
+        
+// STEP 9 (local step)
+//saveautosortstimes fnums
+//saveautosortmeta fnums
+//allmergers 0.02 fnums //0.02 is the threshold for merging chains. Increase it to result in fewer mergers. A reasonable range is 0.0 - 0.1
+//savel2stimes fnums
+//savemergerdetails (fnums |> Array.map fst)
