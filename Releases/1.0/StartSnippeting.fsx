@@ -1,5 +1,5 @@
 ﻿#r "System.Xml.Linq"
-#r @"D:\Rajesh\Ephys\Data Analysis\FSharp\TitanSpikeSnippeter\SnippetMaster\bin\Release\SnippetMaster.exe"
+#r @".\WorkerNodes\Clusterer\SnippetMaster.exe"
 
 open System.Xml.Linq
 open System.IO
@@ -7,31 +7,35 @@ open Helper
 open System.Text.RegularExpressions
 let xn = XName.op_Implicit
 
-let datahostip = @"192.168.0.100:5900"
+let datahostip = @"192.168.0.1:5900" // [IP address : port number] of RESTful service on data-server. Can also be "localhost:5900"
 
-let serverpathip = Remote @"140.247.178.16:5900"
-let serverpath = sprintf @"/root/data/rpoddar/%s/raw/%s"
-let serverpathgz = sprintf @"/zones/data/rpoddar/%s/raw/%s"
-let userpathout = @"\\140.247.178.8\rpoddar\"
-let serverpathout = sprintf @"/root/data/rpoddar/%s/raw/%s"
+let userpath = @"\\192.168.0.1\X\Data" // local or network (samba) path to parent data directory on server
 
-let cmdpath = @"& 'C:\Titanic\Snipppeter"
+let serverpathip = Remote @"192.168.0.1:5900" // [IP address : port number] of RESTful service on data-server.
+
+let serverpath = sprintf @"X:\Data\%s\raw\%s" // path to parent data directory on server
+let serverpathgz = sprintf @"X:\Data\%s\raw\%s" // path to parent data directory on server
+
+let userpathout = userpath
+let serverpathout = serverpath
+
+let cmdpath = @"& 'C:\Titanic\Snipppeter" // location of Snippeter folder on master/worker computers
 
 let init rat fnum chstoexclude numsamples byteoffset =
     let sp = serverpath rat fnum
 
-    //Tetrodes
-//    let esets = List.init 16 (fun i -> 
-//        sprintf "%d" i,Set.difference ([i*4..i*4+3]|>Set.ofList) chstoexclude|>Set.toList)
+    // Tetrodes (comment if not necessary)
+    let esets = List.init 16 (fun i -> 
+        sprintf "%d" i,Set.difference ([i*4..i*4+3]|>Set.ofList) chstoexclude|>Set.toList)
 
-    //Single Electrodes
-    let esets = 
-        List.init 64 (fun i ->
-            if chstoexclude |> Set.contains i then
-                None
-            else
-                Some (sprintf "%d" i,[i])
-        ) |> List.choose id
+    // Single Electrodes (comment if not necessary)
+//    let esets = 
+//        List.init 64 (fun i ->
+//            if chstoexclude |> Set.contains i then
+//                None
+//            else
+//                Some (sprintf "%d" i,[i])
+//        ) |> List.choose id
 
     let dirpath = 
         let x = sprintf @"%s\%s\%s" userpathout rat fnum
@@ -45,7 +49,7 @@ let init rat fnum chstoexclude numsamples byteoffset =
 
     let settingsfile = sprintf @"%s\SnippeterSettings.xml" dirpath
 
-    let samplesPerBlock = 30000*15 //15 secondss
+    let samplesPerBlock = 30000*15 // 15 seconds per block at 30 kHz sampling rate
     let endPadding = 3000
     let w_pre,w_post = 31,32
     let dfact = 100
@@ -53,8 +57,8 @@ let init rat fnum chstoexclude numsamples byteoffset =
         match numsamples with
         |Some x -> x 
         |None -> 
-            (getSize serverpathip (sprintf "%s.amp" sp) |> Async.RunSynchronously)/128L
-            //(getSize serverpathip (sprintf "%s.rhd" sp) |> Async.RunSynchronously)/176L
+            (getSize serverpathip (sprintf "%s.amp" sp) |> Async.RunSynchronously)/128L // for AMP files. Comment if not necessary
+            //(getSize serverpathip (sprintf "%s.rhd" sp) |> Async.RunSynchronously)/176L // for RHD files. Comment if not necessary
     let numblocks = (numsamples-(endPadding|>int64))/(samplesPerBlock|>int64)|>int
 
     let refchans chipnum =
@@ -103,10 +107,12 @@ let init rat fnum chstoexclude numsamples byteoffset =
         | None -> x
     sp,spout
 
-let files = [|"bairagi",[|"635013888324512817",[||],None,None;|]|]
+// use this for individual files (comment if not using)
+let files = [|"Rat1",[|"data_file_1",[||],None,None;"data_file_2",[||],None,None|]|]
 
+// use this to read a text file with the list of files to snippet (comment if not using)
 //let files = 
-//    File.ReadAllLines(@"C:\Users\rpoddar\Downloads\snippeting-SW-7.txt")
+//    File.ReadAllLines(@"C:\Snippeting_list.txt")
 //    |> Array.map (fun x -> x.Split())
 //    |> Array.fold (fun state x -> 
 //        match x with
