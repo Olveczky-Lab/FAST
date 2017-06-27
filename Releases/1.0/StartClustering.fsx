@@ -26,7 +26,7 @@ let extdatahost = Remote extdatahostip
 let userpathlocal = @"\\140.247.178.65\Data" // local or network (samba) path to parent data directory on server
 
 let userpathremote = @"/root/Data" // path to parent data directory on server (used in queries to RESTful service)
-let rat = "Dataset_1" // folder in which datasets to be clustered is stored
+let rat = "Rat1" // folder in which datasets to be clustered is stored
 let minclussize = 15
 let numblocksperazuretask = 200
 let cmdfile = @"C:\cmds" // if clustering commands are to be saved to a text file (optional)
