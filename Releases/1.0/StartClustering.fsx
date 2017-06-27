@@ -346,7 +346,7 @@ let fnums =
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
-// UNCOMMENT AND RUN THE CODE BLOCKS LISTED STEP BY STEP.
+// UNCOMMENT AND RUN THESE CODE BLOCKS STEP BY STEP.
 
 // STEP 1 (local step)
 //for (fnum,esets) in fnums do
