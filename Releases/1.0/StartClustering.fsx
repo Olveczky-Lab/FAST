@@ -17,13 +17,13 @@ let xn = XName.op_Implicit
 
 let cmdpath = @"& 'C:\Titanic\Clusterer"
 
-let intdatahostip = "140.247.178.16:5900" // IP address : port number of RESTful service on data-server. Could also be formatted as "localhost:5900"
+let intdatahostip = "192.168.0.1:5900" // IP address : port number of RESTful service on data-server. Could also be formatted as "localhost:5900"
 
-let extdatahostip = "140.247.178.16:5900" // IP address : port number of RESTful service on data-server
+let extdatahostip = "192.168.0.1:5900" // IP address : port number of RESTful service on data-server
 
 let extdatahost = Remote extdatahostip
 
-let userpathlocal = @"\\140.247.178.65\Data" // local or network (samba) path to parent data directory on server
+let userpathlocal = @"\\192.168.0.1\Data" // local or network (samba) path to parent data directory on server
 
 let userpathremote = @"/root/Data" // path to parent data directory on server (used in queries to RESTful service)
 let rat = "Rat1" // folder in which datasets to be clustered is stored
@@ -302,17 +302,17 @@ let savemergerdetails fnums =
                 )
         )
 
-//For all channel groups (0 to 15) (comment if not using)
+// For all channel groups (0 to 15) (comment if not using)
 let fnums = 
-  [|"635596782733480422";"636203370316423755"|]
+  [|"data_file_1";"data_file_2"|]
   |> Array.map (fun fnum ->
     let esets = loadnTrodes (XElement.Load(sprintf @"%s\%s\%s\SnippeterSettings.xml" userpathlocal rat fnum).Element(xn "EIBElectrodePlacement"))
     fnum,(esets|>Array.map (fun (chgroup,xs) -> chgroup,Array.length xs))
   )
 
-////For select channel groups (comment if not using)
+// For select channel groups (comment if not using)
 //let fnums = 
-//  [|"635596782733480422",[|"0";"2"|];"636203370316423755",[|"1";"2"|]|]
+//  [|"data_file_1",[|"0";"2"|];"data_file_2",[|"1";"2"|]|]
 //  |> Array.map (fun (fnum,chgroups) ->
 //    let esets = loadnTrodes (XElement.Load(sprintf @"%s\%s\%s\SnippeterSettings.xml" userpathlocal rat fnum).Element(xn "EIBElectrodePlacement"))
 //    fnum,chgroups|>Array.map (fun chgroup -> 
@@ -322,7 +322,7 @@ let fnums =
 //  )
 
 
-// REFERENCE LIST OF FUNCTION CALLS. WE RECOMMEND YOU FOLLOW THE STEPS LISTED BELOW
+// REFERENCE LIST OF FUNCTION CALLS. WE RECOMMEND YOU FOLLOW THE STEPS LISTED IN THE NEXT SECTION
 //for (fnum,esets) in fnums do
     //dispttl ()    
     //createDirs ()
