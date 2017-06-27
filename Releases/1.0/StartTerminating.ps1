@@ -13,7 +13,7 @@
 	for ($j=0;$j -lt $workernodes.length;$j++) {
 		$workernode = $workernodes[$j]
 		for ($i=0;$i -lt 2;$i++) {
-			iex "& '$prc' http://$workernode Administrator olabmstr!1 $cmd 'TerminalWorker $minclussize $hostname $sfname $stfname $clusfname $outfname $nchans $workerendpoint $j-$i' C:\Titanic\Clusterer"
+			iex "& '$prc' http://$workernode Administrator password $cmd 'TerminalWorker $minclussize $hostname $sfname $stfname $clusfname $outfname $nchans $workerendpoint $j-$i' C:\Titanic\Clusterer"
 		}
 	}
 	$sw = [Diagnostics.Stopwatch]::StartNew()
