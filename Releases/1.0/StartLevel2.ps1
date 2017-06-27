@@ -13,7 +13,7 @@ else {
 	for ($j=0;$j -lt $workernodes.length;$j++) {
 		$workernode = $workernodes[$j]
 		for ($i=0;$i -lt 1;$i++) {
-			iex "& '$prc' http://$workernode Administrator olabmstr!1 $cmd 'Level2Worker $hostname $sfname $l2fname $nchans $nlevels $workerendpoint $j-$i' C:\Titanic\Clusterer"
+			iex "& '$prc' http://$workernode Administrator password $cmd 'Level2Worker $hostname $sfname $l2fname $nchans $nlevels $workerendpoint $j-$i' C:\Titanic\Clusterer"
 		}
 	}
 	$sw = [Diagnostics.Stopwatch]::StartNew()
