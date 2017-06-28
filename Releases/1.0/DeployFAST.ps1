@@ -5,14 +5,14 @@ $ReleasePath = ".\WorkerNodes"
 
 $Cred = Get-Credential
 
-$workernodes=@("192.168.0.201","192.168.0.202","192.168.0.203","192.168.0.204","192.168.0.205")
+$computerNames=@("192.168.0.201","192.168.0.202","192.168.0.203","192.168.0.204","192.168.0.205")
 
-for ($index = 0; $index -lt $workernodes.length; $index++) {
-	$workernode = $workernodes[$index];    
-    net use \\$workernode /USER:Administrator password
-    Copy-Item $ReleasePath \\$workernode\C$\Titanic -Recurse
-    net use \\$workernode /delete
-    icm $workernode -Credential $Cred -ScriptBlock {
+for ($index = 0; $index -lt $computerNames.length; $index++) {
+	$computerName = $computerNames[$index];    
+    net use \\$computerName /USER:Administrator password
+    Copy-Item $ReleasePath \\$computerName\C$\Titanic -Recurse
+    net use \\$computerName /delete
+    icm $computerName -Credential $Cred -ScriptBlock {
         $port = 8000
         C:\Titanic\InstallUtil.exe C:\Titanic\ProcessRunnerService\ProcessRunnerService.exe
         netsh advfirewall firewall add rule name=ProcessRunnerService dir=in action=allow protocol=TCP localport=$port
