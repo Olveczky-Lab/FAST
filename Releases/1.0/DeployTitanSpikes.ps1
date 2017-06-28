@@ -1,4 +1,4 @@
-#Copy the latest release from the svn server to a local directory. Change $ReleasePath to that
+#Copy the latest release from the github server to a local directory. Change $ReleasePath to that
 $ReleasePath = ".\WorkerNodes"
 #Change ProcessRunnerService.exe.config to use an unused port in the machine like 8000 and the Username/password to a valid one
 #Change $port below to the same value
