@@ -9,7 +9,7 @@ $computerNames=@("192.168.0.201","192.168.0.202","192.168.0.203","192.168.0.204"
 
 for ($index = 0; $index -lt $computerNames.length; $index++) {
 	$computerName = $computerNames[$index];    
-    net use \\$computerName /USER:Administrator password
+    net use \\$computerName /USER:username password
     Copy-Item $ReleasePath \\$computerName\C$\Titanic -Recurse
     net use \\$computerName /delete
     icm $computerName -Credential $Cred -ScriptBlock {
