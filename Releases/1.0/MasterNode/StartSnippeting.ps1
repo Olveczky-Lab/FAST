@@ -22,7 +22,7 @@ else {
 			for ($j=0;$j -lt $workernodes.length;$j++) {
 				$workernode = $workernodes[$j]
 				for ($i=0;$i -lt 4;$i++) {
-					iex "& '$prc' http://$workernode Administrator password $cmd 'SnippetWorker $hostname $settingsfile $workerendpoint $datafile $outpath $j-$i' C:\Titanic\Snippeter"
+					iex "& '$prc' http://$workernode username password $cmd 'SnippetWorker $hostname $settingsfile $workerendpoint $datafile $outpath $j-$i' C:\Titanic\Snippeter"
 				}
 			}
 
