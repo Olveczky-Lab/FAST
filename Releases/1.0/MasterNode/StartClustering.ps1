@@ -13,7 +13,7 @@
 	for ($j=0;$j -lt $workernodes.length;$j++) {
 		$workernode = $workernodes[$j]
 		for ($i=0;$i -lt 4;$i++) {
-			iex "& '$prc' http://$workernode Administrator password $cmd 'ClusterWorker $hostname $datafname $nchans $outfname $mintemp $maxtemp $workerendpoint $j-$i' C:\Titanic\Clusterer"
+			iex "& '$prc' http://$workernode username password $cmd 'ClusterWorker $hostname $datafname $nchans $outfname $mintemp $maxtemp $workerendpoint $j-$i' C:\Titanic\Clusterer"
 		}
 	}
 
