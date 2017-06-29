@@ -11,7 +11,7 @@ let datahostip = @"192.168.0.1:8001" // [IP address : port number] of RESTful se
 
 let userpath = @"\\192.168.0.1\X\Data" // local or network (samba) path to parent data directory on server
 
-let serverpathip = Remote @"192.168.0.1:5900" // [IP address : port number] of RESTful service on data-server.
+let serverpathip = Remote @"192.168.0.1:8001" // [IP address : port number] of RESTful service on data-server.
 
 let serverpath = sprintf @"X:\Data\%s\raw\%s" // path to parent data directory on server
 let serverpathgz = sprintf @"X:\Data\%s\raw\%s" // path to parent data directory on server
