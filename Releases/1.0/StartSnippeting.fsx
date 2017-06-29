@@ -7,7 +7,7 @@ open Helper
 open System.Text.RegularExpressions
 let xn = XName.op_Implicit
 
-let datahostip = @"192.168.0.1:8001" // [IP address : port number] of RESTful service on data-server (aka blobserver). Can also be "localhost:8001"
+let datahostip = @"192.168.0.1:8001" // [IP address : port number] of RESTful service on data-server (a.k.a. blobserver). 
 
 let userpath = @"\\192.168.0.1\X\Data" // local or network (samba) path to parent data directory on server
 
