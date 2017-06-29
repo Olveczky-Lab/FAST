@@ -61,7 +61,7 @@ let init rat fnum chstoexclude numsamples byteoffset =
             //(getSize serverpathip (sprintf "%s.rhd" sp) |> Async.RunSynchronously)/176L // for RHD files. Comment if not necessary
     let numblocks = (numsamples-(endPadding|>int64))/(samplesPerBlock|>int64)|>int
 
-    let refchans chipnum =
+    let refchans chipnum = // specification of median reference group(s). By default, there are 2 groups - channels [0..31] and [32..63].
         esets |> List.map snd |> List.concat |> List.filter (fun chnum -> chnum >= chipnum*32 && chnum < (chipnum+1)*32)
         |> List.map (fun x -> XElement(xn "Channel",x))
         |> fun x -> XElement(xn "MedianReferenceGroup",x)
