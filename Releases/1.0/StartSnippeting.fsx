@@ -51,7 +51,7 @@ let init rat fnum chstoexclude numsamples byteoffset =
 
     let samplesPerBlock = 30000*15 // 15 seconds per block at 30 kHz sampling rate
     let endPadding = 3000
-    let w_pre,w_post = 31,32
+    let w_pre,w_post = 31,32 // number of waveform samples before and after waveform peak
     let dfact = 100
     let numsamples = 
         match numsamples with
