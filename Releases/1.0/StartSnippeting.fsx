@@ -24,7 +24,7 @@ let cmdpath = @"& 'C:\Titanic\Snipppeter" // location of Snippeter folder on mas
 let init rat fnum chstoexclude numsamples byteoffset =
     let sp = serverpath rat fnum
 
-    // Tetrodes (comment if not necessary)
+    // Tetrodes (grouping of consecutive channels; comment if not necessary)
     let esets = List.init 16 (fun i -> 
         sprintf "%d" i,Set.difference ([i*4..i*4+3]|>Set.ofList) chstoexclude|>Set.toList)
 
