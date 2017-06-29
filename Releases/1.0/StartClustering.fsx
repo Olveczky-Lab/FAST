@@ -17,7 +17,7 @@ let xn = XName.op_Implicit
 
 let cmdpath = @"& 'C:\Titanic\Clusterer" // location of clustering folder on Master/Worker computers
 
-let intdatahostip = "192.168.0.1:8001" // IP address : port number of RESTful service on data-server. Could also be formatted as "localhost:8001"
+let intdatahostip = "192.168.0.1:8001" // IP address : port number of RESTful service on data-server (blobserver). 
 
 let extdatahostip = "192.168.0.1:8001" // IP address : port number of RESTful service on data-server
 
