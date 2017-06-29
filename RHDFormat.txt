@@ -1,4 +1,7 @@
-Each data frame is 176 bytes multi-byte words are arranged in little-endian order (which is typically the default). The file is a sequence of 176 byte frames.
+Each data frame is 176 bytes. 
+Multi-byte words are arranged in little-endian order (which is typically the default). 
+The file is a sequence of 176 byte frames.
+
 The structure of each frame is as follows:
 Offset 0 bytes  : The first 8 bytes comprise a 64-bit header and is always equal to 0xC691199927021942. 
 Offset 8 bytes  : The next 4 bytes represent a timestamp starting at 0 for the first frame, 1 for the next one and so on.

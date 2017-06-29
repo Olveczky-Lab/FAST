@@ -1,0 +1,8 @@
+Each data frame is 128 bytes. 
+Multi-byte words are arranged in little-endian order (which is typically the default). 
+The file is a sequence of 128 byte frames.
+
+The structure of each frame is as follows:
+There are 64 16-bit words for each channel. 
+32768 corresponds to 0.0 and each step of 1 corresponds to 0.195uV. So 32769 is 0.195uV, 32767 is -0.195uV, etc. 
+The first 16 bit word corresponds to Channel 0 (Channel 0 of Chip 0), the second one to Channel 32 (Channel 0 of Chip 1), the third one is Channel 1 (Channel 1 of Chip 0), the fourth one is Channel 33 (Channel 1 of Chip 1) and so on.
