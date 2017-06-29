@@ -102,4 +102,6 @@ You will need to run **StartSnippeting.fsx** in an F# interactive window within 
 
 - Add a list of file names you would like to cluster. Determine whether you would like to cluster all channel groups specified in *SnippeterSettings.xml* or a select set of channel groups by commenting/uncommenting appropriate sections of the .fsx script.
 
-- Uncomment and run the code sections at the bottom of the .fsx script from Steps 1 through 9 in the F# interactive window. Steps 2-9 will generate a list of clustering commands which have to be copy-pasted in a powershell window on the Master node.
+- Uncomment and run the code sections at the bottom of the .fsx script from Steps 1 through 9 in the F# interactive window. Steps 2-9 will generate a list of clustering commands which have to be copied and run in a powershell window on the Master node.
+
+
