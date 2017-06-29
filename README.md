@@ -99,7 +99,7 @@ where the argument "IPaddress:port" corresponds to the address of the RESTful se
 
 The snippeting process should generate two files for each channel grouping.
 - A SpikeTimes file with a list of sample numbers for detected events at *uint64* precision.
-- A Spikes file with the waveforms of the detected events in *int16* precision. Each event waveform comprises *nCh X 64 sample* 16-bit words arranged in the order `[Ch0-Samp0, Ch1-Samp0, Ch2-Samp0, Ch3-Samp0, Ch0-Samp1, etc.]`. To convert to units of voltage, change type to double precision and multiply by 1.95e-7.
+- A Spikes file with the waveforms of the detected events in *int16* precision. Each event waveform comprises *nchannels X 64 samples* 16-bit words arranged in the order `[Ch0-Sample0, Ch1-Sample0, Ch2-Sample0, Ch3-Sample0, Ch0-Sample1, etc.]`. To convert to units of voltage, change type to double precision and multiply by 1.95e-7.
 
 
 ## Clustering
