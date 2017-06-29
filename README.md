@@ -91,7 +91,11 @@ You will need to run **StartSnippeting.fsx** in an F# interactive window within 
 	
 -  Copy and paste the snippeting 'inpaths' and 'outpaths' from the F# interactive window on your workstation to either **SnippetAll.ps1** or **SnippetAllAMP.ps1** scripts on the Master node (depending on whether you are snippeting RHD or AMP files).
 
-- To launch the snippeting process on the Worker nodes, open a powershell window on the Master node and run the command `C:\Titanic\Snippeter\SnippetAll.ps1 IPaddress:port` or `C:\Titanic\Snippeter\SnippetAllAMP.ps1 IPaddress:port` where the argument "IPaddress:port" corresponds to the address of the RESTful service (blobserver) that is running on your data server (e.g. `C:\Titanic\Snippeter\SnippetAll.ps1 192.168.0.1:8001`). 
+- To launch the snippeting process on the Worker nodes, open a powershell window on the Master node and run the command 
+`C:\Titanic\Snippeter\SnippetAll.ps1 IPaddress:port` 
+or 
+`C:\Titanic\Snippeter\SnippetAllAMP.ps1 IPaddress:port`
+where the argument "IPaddress:port" corresponds to the address of the RESTful service (blobserver) that is running on your data server (e.g. `C:\Titanic\Snippeter\SnippetAll.ps1 192.168.0.1:8001`). 
 
 The snippeting process should generate two files for each channel grouping.
 - A SpikeTimes file with a list of sample numbers for detected events at *uint64* precision.
@@ -112,3 +116,5 @@ If run successfully, the clustering steps should generate an ensemble of *Merged
 
 
 To inspect and peform manual corrections of these clusters, we recommend trying our [ChainViewer GUI](https://github.com/Olveczky-Lab/FAST-ChainViewer) written in Matlab.
+
+
