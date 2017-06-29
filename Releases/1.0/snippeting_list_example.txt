@@ -1,0 +1,12 @@
+Rat1
+
+data_file_1   32 34   1000000
+data_file_2   32 34
+data_file_3   32 34
+
+
+Rat2
+
+data_file_1   32  1421900000
+data_file_2   32
+data_file_3   32
