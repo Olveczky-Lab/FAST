@@ -59,18 +59,26 @@ Note that master and worker nodes are not required to be distinct machines - the
 	
 - Modify paths in **StartSnippeting.fsx** and **StartClustering.fsx** to point to the IP address and location of data on the data server (see comments in scripts for more details).
 
-## Data file format
+## Recording file format
 
-FAST is currently limited to processing data files recorded on 64 channel electrode arrays. If your data is recorded on fewer channels you will need to pad it with zeros up to 64 channels. We have provided a utility that can help with this.
+FAST is currently limited to processing data files recorded on 64 channel electrode arrays. If your data is recorded on fewer channels you will need to pad it with zeros up to 64 channels. 
 
 - [RHD file format](https://github.com/Olveczky-Lab/FAST/blob/master/RHDFormat.txt): This is similar to IntanTech's native [RHD2000 format](http://intantech.com/files/Intan_RHD2000_data_file_formats.pdf), and includes data recorded from auxillary channels on the RHD2000 Intan chips, chip supply voltages and FPGA board TTL inputs, in addition to the voltage recordings from the electrode array.
 
-- [AMP file format](https://github.com/Olveczky-Lab/FAST/blob/master/AMPFormat.txt): This contains only the voltage recordings.
+- [AMP file format](https://github.com/Olveczky-Lab/FAST/blob/master/AMPFormat.txt): This contains only the voltage recordings. 
+
+We have provided a Matlab function **[convertToAMP.m](https://github.com/Olveczky-Lab/FAST/Utilities/convertToAMP.m)** that can help convert your data source to our AMP file format.
 
 
 ## Snippeting
 
-Follow these steps to snippet your data.
+You will need to run sections of **StartSnippeting.fsx** in an F# interactive window in your preferred code editor. If using Visual Studio, you should enable running F# interactive as a 64-bit process in *Options > F# Tools*.
+
+- Update paths in **StartSnippeting.fsx**.
+-   
 
 ## Clustering
+
+
+
 
