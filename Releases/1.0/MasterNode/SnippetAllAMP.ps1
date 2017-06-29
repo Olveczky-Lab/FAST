@@ -14,6 +14,6 @@ else {
 For($I=0;$I -lt $inpaths.count;$I++) {
 		$inpath = $inpaths[$I]
 		$outpath = $outpaths[$I]
-		iex "& 'C:\Titanic\Snippeter\StartSnippeting.ps1' $hostname $inpath.amp $outpath"
+		iex "& 'C:\Titanic\Snippeter\StartSnippetingAMP.ps1' $hostname $inpath.amp $outpath"
 	}
 }
