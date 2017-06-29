@@ -116,4 +116,6 @@ If run successfully, the clustering steps should generate an ensemble of *Merged
 
 
 ## Manual inspection
-To inspect and peform manual corrections of these clusters, we recommend trying our [ChainViewer GUI](https://github.com/Olveczky-Lab/FAST-ChainViewer) written in Matlab.
+To inspect and peform manual corrections of these clusters, we recommend using our [ChainViewer GUI](https://github.com/Olveczky-Lab/FAST-ChainViewer) written in Matlab.
+
+
