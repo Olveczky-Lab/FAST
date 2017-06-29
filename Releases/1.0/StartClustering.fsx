@@ -302,7 +302,7 @@ let savemergerdetails fnums =
                 )
         )
 
-// For all channel groups (0 to 15) (comment if not using)
+// For all channel groups (comment if not using)
 let fnums = 
   [|"data_file_1";"data_file_2"|]
   |> Array.map (fun fnum ->
