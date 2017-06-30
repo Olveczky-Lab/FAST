@@ -44,8 +44,8 @@ Note that master and worker nodes are not required to be distinct machines - the
 		- If required, update the port number in the *WorkerNodes/ProcessRunnerService/**ProcessRunnerService.exe.config*** file.
 		- Run **DeployFAST.ps1** in a powershell window on any PC with access to the nodes.
 	- Set up Master node.
-		- Update the following powershell scripts (*.ps1) in the *MasterNode* Release folder with the list of worker-nodes, their port numbers, and login (username + pwd) details -  **StartSnippeting.ps1**, **StartSnippetingAMP.ps1**, **StartTTL.ps1**, **StartClustering.ps1**, **StopClustering.ps1**, **StartTerminating.ps1**, **StartLevel2.ps1**, **StartAutoSorting.ps1**.
-		- Copy **SnippetAll.ps1**, **SnippetAllAmp.ps1**, **StartSnippeting.ps1**, **StartSnippetingAMP.ps1**, **StartTTL.ps1** to the _C:\Titanic\Snippeter_ folder on the designated Master node. Also, if necessary, update the number of snippeting/clustering processes to run on each worker node - a good rule of thumb is 4 (default) for every 8 GB of RAM.
+		- Update the following powershell scripts (*.ps1) in the *MasterNode* Release folder with the list of worker-nodes, their port numbers, and login (username + pwd) details -  **StartSnippeting.ps1**, **StartSnippetingAMP.ps1**, **StartTTL.ps1**, **StartClustering.ps1**, **StopClustering.ps1**, **StartTerminating.ps1**, **StartLevel2.ps1**, **StartAutoSorting.ps1**. Also, if necessary, update the number of snippeting/clustering processes to run on each worker node - a good rule of thumb is 4 (default) for every 8 GB of RAM.
+		- Copy **SnippetAll.ps1**, **SnippetAllAmp.ps1**, **StartSnippeting.ps1**, **StartSnippetingAMP.ps1**, **StartTTL.ps1** to the _C:\Titanic\Snippeter_ folder on the designated Master node.
 		- Copy **StartClustering.ps1**, **StopClustering.ps1**, **StartTerminating.ps1**, **StartLevel2.ps1**, **StartAutoSorting.ps1** to the _C:\Titanic\Clusterer_ folder on the designated Master node.
 	
 
