@@ -16,15 +16,15 @@ You will need to set up the following machine(s).
 
 **Workstation**
 A workstation is required to generate the properly formatted snippeting and clustering commands to be run on the distributed computing platform. 
-- Windows 7 (64 bit) or above
+- Windows 7 (64 bit) or later.
 - F# development environment with ability to run F# scripts (.fsx) interactively. 
 	Examples include...
 	- Visual Studio 2013 or later.
 	- [Visual Studio Code](https://code.visualstudio.com/) with [Ionide](http://ionide.io/) plugin and [Visual F# Tools](https://www.microsoft.com/en-us/download/details.aspx?id=48179).
 	
 **Master and worker node(s)**
-- Windows 7 (64 bit) or above
-- At least 8 GB RAM
+- Windows 7 (64 bit) or later.
+- At least 8 GB RAM.
 
 Note that master and worker nodes are not required to be distinct machines - they could instead be different processes running in the same Windows environment (even on the workstation computer).	
 
