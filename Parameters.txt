@@ -1,4 +1,4 @@
-TitanSpikes Algorithm Parameters
+FAST Algorithm Parameters
 
 Snippeting
 
