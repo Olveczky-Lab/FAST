@@ -86,7 +86,7 @@ You will need to run **StartSnippeting.fsx** in an F# interactive window within 
 
 - Now run the **StartSnippeting.fsx** script in F# interactive. Then enter the command `init all();;`. This will do the following...
 	- Create the required directory structure for each recording file.
-	- Create a *SnippeterSettings.xml* definition for each recording that contains all information about the file to be snippeted. You can modify specific attributes in this XML file if you would like to change particular snippeting parameters.
+	- Create a *SnippeterSettings.xml* definition for each recording. This file contains all information about the recording to be snippeted. You can modify specific attributes in this XML file if you would like to change particular snippeting parameters.
 	- Generate a list of snippeting 'in' and 'out' paths in the F# interactive window. 
 	
 -  Copy and paste the snippeting 'inpaths' and 'outpaths' from the F# interactive window on your workstation to either **SnippetAll.ps1** or **SnippetAllAMP.ps1** scripts on the Master node (depending on whether you are snippeting RHD or AMP files).
