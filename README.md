@@ -62,12 +62,11 @@ Note that master and worker nodes are not required to be distinct machines - the
 
 ## Recording file format
 
-FAST is currently limited to processing data files recorded on 64 channel electrode arrays. If your data is recorded on fewer channels you will need to pad it with zeros up to 64 channels. 
-
-- [RHD file format](https://github.com/Olveczky-Lab/FAST/blob/master/RHDFormat.txt): This is similar to IntanTech's native [RHD2000 format](http://intantech.com/files/Intan_RHD2000_data_file_formats.pdf), and includes data recorded from auxillary channels on the RHD2000 Intan chips, chip supply voltages and FPGA board TTL inputs, in addition to the voltage recordings from the electrode array.
+- [RHD file format](https://github.com/Olveczky-Lab/FAST/blob/master/RHDFormat.txt): This is similar to IntanTech's native [RHD2000 format](http://intantech.com/files/Intan_RHD2000_data_file_formats.pdf), and includes data recorded from auxiliary channels on the RHD2000 Intan chips, chip supply voltages and FPGA board TTL inputs, in addition to the voltage recordings from the electrode array.
 
 - [AMP file format](https://github.com/Olveczky-Lab/FAST/blob/master/AMPFormat.txt): This contains only the voltage recordings. 
 
+FAST is currently limited to processing data files recorded on 64 channel electrode arrays. If your data is recorded on fewer channels you will need to pad it with zeros up to 64 channels. 
 We have provided a Matlab function **[convertToAMP.m](https://github.com/Olveczky-Lab/FAST/Utilities/convertToAMP.m)** that you can use to convert your data files to our AMP file format.
 
 
@@ -77,11 +76,11 @@ You will need to run **StartSnippeting.fsx** in an F# interactive window within 
 
 - Update paths and addresses in **StartSnippeting.fsx**.
 
-- Specify the grouping of channels in your electrode array. We have included options for single electrodes and tetrodes (channels grouped by default as `[0,1,2,3], [4,5,6,7], ... , [60,61,62,63]`), but you can also specify your own custom grouping by editing the .fsx script.
+- Specify the grouping of channels in your electrode array. We have included options for single electrodes and tetrodes (channels grouped by default as `{0,1,2,3},{4,5,6,7},...,{60,61,62,63}`), but you can also specify your own custom grouping by editing the .fsx script.
 
-- Specify whether the files are in RHD or AMP format, in the .fsx script.
+- Specify whether the files are in RHD or AMP format in the .fsx script.
 
-- Specify the grouping of channels for median subtraction. By default there are two groups comprising channels `[0..31]` and `[32..63]` which correspond to the chip grouping of channels on our custom 2X RHD2132 Intan headstage.
+- Specify the grouping of channels for median subtraction. By default there are two groups comprising channels `{0,...,31}` and `{32,...,63}` which correspond to the chip grouping of channels on our custom 2X RHD2132 Intan headstage.
 
 - List the files you want to snippet, either in the .fsx script or in an external text file (see **snippeting_list_example.txt**). For each file, you can specify an optional list of channels to exclude as well as the number of frames to snippet (optional, in case the end of the recording is corrupted).
 
@@ -117,6 +116,6 @@ If run successfully, the clustering steps should generate an ensemble of *Merged
 
 
 ## Manual inspection
-To inspect and peform manual corrections of these clusters, we recommend using our [ChainViewer GUI](https://github.com/Olveczky-Lab/FAST-ChainViewer) written in Matlab.
+To inspect and perform manual corrections of these clusters, we recommend using our [ChainViewer GUI](https://github.com/Olveczky-Lab/FAST-ChainViewer) written in Matlab.
 
 
