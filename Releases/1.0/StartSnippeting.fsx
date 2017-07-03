@@ -13,8 +13,8 @@ let userpath = @"\\192.168.0.1\X\Data" // local or network (samba) path to paren
 
 let serverpathip = Remote @"192.168.0.1:8001" // [IP address : port number] of RESTful service on data-server.
 
-let serverpath = sprintf @"X:\Data\%s\raw\%s" // path to parent data directory on server
-let serverpathgz = sprintf @"X:\Data\%s\raw\%s" // path to parent data directory on server
+let serverpath = sprintf @"X:\Data\%s\%s" // path to parent data directory on server
+let serverpathgz = sprintf @"X:\Data\%s\%s" // path to parent data directory on server
 
 let userpathout = userpath
 let serverpathout = serverpath
