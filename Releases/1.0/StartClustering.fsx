@@ -325,7 +325,7 @@ let fnums =
 // REFERENCE LIST OF FUNCTION CALLS. WE RECOMMEND YOU FOLLOW THE STEPS LISTED IN THE NEXT SECTION
 //for (fnum,esets) in fnums do
     //dispttl ()    
-    //createDirs ()
+    //createDirs fnums
 //    for chgroup,nchans in esets do
         //savecluscmdazure fnum chgroup nchans 1
         //dispcluscmd fnum chgroup nchans 1 // increment cluster iteration from 1 to 4 (or beyond)
