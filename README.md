@@ -84,7 +84,7 @@ You will need to run **StartSnippeting.fsx** in an F# interactive window within 
 
 - List the files you want to snippet, either in the .fsx script or in an external text file (see **snippeting_list_example.txt**). For each file, you can specify an optional list of channels to exclude (here, channel numbers are 1 indexed, so `{1,...,64}`) as well as the number of frames/samples to snippet (optional, in case the end of the recording is corrupted).
 
-- Now run the **StartSnippeting.fsx** script in F# interactive. Then enter the command `init all();;`. This will do the following...
+- Now run the **StartSnippeting.fsx** script in F# interactive. Then enter the command `initall();;`. This will do the following...
 	- Create the required directory structure for each recording file.
 	- Create a *SnippeterSettings.xml* definition for each recording. This file contains all information about the recording to be snippeted. You can modify specific attributes in this XML file if you would like to change particular snippeting parameters.
 	- Generate a list of snippeting 'in' and 'out' paths in the F# interactive window. 
