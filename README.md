@@ -29,7 +29,7 @@ Note that master and worker nodes are not required to be distinct machines - the
 
 ## Installation
 
-- Download the latest [release](./Releases) from the FAST GitHub repository to your workstation PC.
+- Download the latest [release](https://github.com/Olveczky-Lab/FAST/releases/) from the FAST GitHub repository to your workstation PC.
 
 - Set up master and worker nodes.
 	- Install [.NET Framework 4.5](https://www.microsoft.com/en-us/download/details.aspx?id=30653) on all Master and Worker nodes.
