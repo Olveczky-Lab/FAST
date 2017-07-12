@@ -29,7 +29,7 @@ Note that master and worker nodes are not required to be distinct machines - the
 
 ## Installation
 
-- Download the latest [release](https://github.com/Olveczky-Lab/FAST/tree/master/Releases) from the FAST GitHub repository to your workstation PC.
+- Download the latest [release](./Releases) from the FAST GitHub repository to your workstation PC.
 
 - Set up master and worker nodes.
 	- Install [.NET Framework 4.5](https://www.microsoft.com/en-us/download/details.aspx?id=30653) on all Master and Worker nodes.
@@ -65,12 +65,12 @@ Note that master and worker nodes are not required to be distinct machines - the
 
 ## Recording file format
 
-- [RHD file format](https://github.com/Olveczky-Lab/FAST/blob/master/RHDFormat.txt): This is similar to IntanTech's native [RHD2000 format](http://intantech.com/files/Intan_RHD2000_data_file_formats.pdf), and includes data recorded from auxiliary channels on the RHD2000 Intan chips, chip supply voltages and FPGA board TTL inputs, in addition to the voltage recordings from the electrode array.
+- [RHD file format](./RHDFormat.txt): This is similar to IntanTech's native [RHD2000 format](http://intantech.com/files/Intan_RHD2000_data_file_formats.pdf), and includes data recorded from auxiliary channels on the RHD2000 Intan chips, chip supply voltages and FPGA board TTL inputs, in addition to the voltage recordings from the electrode array.
 
-- [AMP file format](https://github.com/Olveczky-Lab/FAST/blob/master/AMPFormat.txt): This contains only the voltage recordings. 
+- [AMP file format](./AMPFormat.txt): This contains only the voltage recordings. 
 
 FAST is currently limited to processing data files recorded on 64 channel electrode arrays. If your data is recorded on fewer channels you will need to pad it with zeros up to 64 channels. 
-We have provided a MATLAB function **[convertToAMP.m](https://github.com/Olveczky-Lab/FAST/blob/master/Utilities/convertToAmp.m)** that you can use to convert your data files to our AMP file format.
+We have provided a MATLAB function **[convertToAMP.m](./Utilities/convertToAmp.m)** that you can use to convert your data files to our AMP file format.
 
 ## Snippeting
 
