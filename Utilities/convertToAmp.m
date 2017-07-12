@@ -3,6 +3,7 @@ function convertToAmp(dat, fpath)
 % INPUTS:
 % dat: nCh * nsamp recording data @ double precision in units of pre-amplitifcation voltage.
 % fpath: desired path and file name of the AMP file you want to generate. e.g. 'D:\Data\data_file_1'.
+%
 % In the AMP format, a value of 32768 corresponds to 0 V and steps of 1 correspond to 1.95e-7 V.
 
 nCh = size(dat,1);
