@@ -70,7 +70,7 @@ Note that master and worker nodes are not required to be distinct machines - the
 - [AMP file format](https://github.com/Olveczky-Lab/FAST/blob/master/AMPFormat.txt): This contains only the voltage recordings. 
 
 FAST is currently limited to processing data files recorded on 64 channel electrode arrays. If your data is recorded on fewer channels you will need to pad it with zeros up to 64 channels. 
-We have provided a MATLAB function **[convertToAMP.m](https://github.com/Olveczky-Lab/FAST/Utilities/convertToAMP.m)** that you can use to convert your data files to our AMP file format.
+We have provided a MATLAB function **[convertToAMP.m](https://github.com/Olveczky-Lab/FAST/blob/master/Utilities/convertToAmp.m)** that you can use to convert your data files to our AMP file format.
 
 ## Snippeting
 
