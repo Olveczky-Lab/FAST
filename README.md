@@ -60,7 +60,7 @@ Note that master and worker nodes are not required to be distinct machines - the
 	`blobserver.exe 8001 >nul` to suppress program output.
 	Here `8001` represents an open TCP port - you could use any available TCP port.
 	- If your data server runs a different OS, then you will need to build the included **blobserver.go** source code with the go compiler before running the executable.
-	- You can check if your blobserver is functioning by opening up a browser window and entering a command such as	`http://IPaddress:port/size?FileName=Path` where `IPaddress:port` is specific to your blobserver and `Path` is the path to some local file on your data server. This command should return the size of that file in bytes.
+	- You can check if your blobserver is functioning by opening a browser window and entering a command such as	`http://IPaddress:port/size?FileName=Path` where `IPaddress:port` is specific to your blobserver and `Path` is the path to some local file on your data server. This command should return the size of that file in bytes.
 	
 - Modify paths in **StartSnippeting.fsx** and **StartClustering.fsx** to point to the IP address and location of data on the data server (see comments in scripts for more details).
 
