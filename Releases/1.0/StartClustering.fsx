@@ -1,3 +1,12 @@
+// INSTRUCTIONS. This assumes your data is stored as follows. Dataserver > Data directory > animals {1,2,3,...} > data_files {1, 2, 3, ...}.
+// 1. Modify the following variables:
+//        - intdatahostip (line 29), extdatahostip (line 31): IP address and port number of the blobserver REST service running on your dataserver. 
+//        - userpathlocal (line 35): network path to your data directory from your current workstation. This network path must be active.
+//        - userpathremote (line 37): local path to your data directory in the dataserver (as if you were working on a terminal window in the dataserver).
+//        - rat (line 38): folder in your data directory which the dataset you want to sort is stored
+// 2. Prepare a list of recording files that you want to cluster. Determine if you want to cluster particular channel groups or process all channel groups by commenting/uncommenting the relevant sections (lines 314-331).
+// 3. Uncomment Steps 1 through 9 (lines 360 onwards), one section at a time, and send this script to the F-sharp interactive (FSI) window. Copy and paste any commands that are generated in the FSI window into a powershell window on the Master node.
+
 #r "System.Xml.Linq"
 #r @".\WorkerNodes\Clusterer\SnippetMaster.exe"
 #r @".\WorkerNodes\Clusterer\FsPickler.dll"
@@ -23,10 +32,10 @@ let extdatahostip = "192.168.0.1:8001" // IP address : port number of RESTful se
 
 let extdatahost = Remote extdatahostip
 
-let userpathlocal = @"\\192.168.0.1\X\Data" // local or share (samba) path to parent data directory on data-server
+let userpathlocal = @"\\192.168.0.1\D\Data" // local or share (samba) path to data directory on data-server
 
-let userpathremote = @"X:\Data" // path to parent data directory on data-server (used in queries to RESTful service)
-let rat = "Rat1" // folder in which datasets to be clustered is stored
+let userpathremote = @"D:\Data" // path to data directory on data-server (used in queries to RESTful service)
+let rat = "Rat1" // subject-specific folder in which data files to be clustered are stored
 let minclussize = 15
 let numblocksperazuretask = 200
 let cmdfile = @"C:\cmds" // if clustering commands are to be saved to a text file (optional)

@@ -1,4 +1,15 @@
-﻿#r "System.Xml.Linq"
+﻿// INSTRUCTIONS. This assumes your data is stored as follows. Dataserver > Data directory > animals {1,2,3,...} > data_files {1, 2, 3, ...}.
+// 1. Modify the following variables:
+//        - datahostip (line 21), serverpathip (line 24): IP address and port number of the blobserver REST service running on your dataserver. 
+//        - userpath (line 22): network path to your data directory from your current workstation. This network path must be active.
+//        - serverpath (line 26): local path to your data directory in the dataserver (as if you were working in a terminal window on the dataserver).
+// 2. Determine if you are snippeting single electrode or tetrode data by commenting/un-commenting the relevant sections below (lines 37-48). If using, tetrode data note that we group consecutive channel numbers into tetrodes, so modify the grouping if your arrangement is different.
+// 3. Determine if you are snippeting AMP or RHD files by commenting/uncommenting the relevant sections below (lines 70-71).
+// 4. Specify the list of files to be snippeted either in this script or in a text file (see snippeting_list_example.txt). Comment or uncomment the relevant sections below (lines 120-144)
+// 5. Run the script in the F# interactive window. 
+// 6. Type initall();; at the prompt. This will generate the directory structure, SnippeterSettings.xml and the 'in' and 'out' snippeting paths. Copy and paste the inpaths and outpaths in the SnippetAll.ps1 Powershell script on the Master node.
+
+#r "System.Xml.Linq"
 #r @".\WorkerNodes\Clusterer\SnippetMaster.exe"
 
 open System.Xml.Linq
@@ -8,13 +19,12 @@ open System.Text.RegularExpressions
 let xn = XName.op_Implicit
 
 let datahostip = @"192.168.0.1:8001" // [IP address : port number] of RESTful service on data-server (a.k.a. blobserver). 
-
-let userpath = @"\\192.168.0.1\X\Data" // local or network (samba) path to parent data directory on server
+let userpath = @"\\192.168.0.1\D\Data" // local or network (samba) path to data directory on server
 
 let serverpathip = Remote @"192.168.0.1:8001" // [IP address : port number] of RESTful service on data-server.
 
-let serverpath = sprintf @"X:\Data\%s\%s" // path to parent data directory on server
-let serverpathgz = sprintf @"X:\Data\%s\%s" // path to parent data directory on server
+let serverpath = sprintf @"D:\Data\%s\%s" // path to data directory on server
+let serverpathgz = serverpath // path to data directory on server
 
 let userpathout = userpath
 let serverpathout = serverpath

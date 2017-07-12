@@ -12,7 +12,7 @@
 	$workernodes=@("192.168.0.201:8000","192.168.0.202:8000","192.168.0.203:8000","192.168.0.204:8000","192.168.0.205:8000")
 	for ($j=0;$j -lt $workernodes.length;$j++) {
 		$workernode = $workernodes[$j]
-		for ($i=0;$i -lt 4;$i++) {
+		for ($i=0;$i -lt 8;$i++) {
 			iex "& '$prc' http://$workernode username password $cmd 'ClusterWorker $hostname $datafname $nchans $outfname $mintemp $maxtemp $workerendpoint $j-$i' C:\Titanic\Clusterer"
 		}
 	}
