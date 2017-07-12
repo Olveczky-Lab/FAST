@@ -21,6 +21,7 @@ A workstation is required to generate the snippeting and clustering commands tha
 	Examples include...
 	- Visual Studio 2013 or later. Ensure that you can run F# interactive as a 64-bit process (*Options > F# Tools*).
 	- [Visual Studio Code](https://code.visualstudio.com/) with [Ionide](http://ionide.io/) plugin and [Visual F# Tools](https://www.microsoft.com/en-us/download/details.aspx?id=48179).
+	
 **Master and worker node(s)**
 - Windows 7 (64 bit) or later.
 - At least 8 GB RAM.
