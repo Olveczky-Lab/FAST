@@ -107,6 +107,7 @@ The snippeting process should generate two files for each channel grouping.
 - Specify 'rat' name - this is just the name of the folder containing the collection of data files that you would like to cluster.
 
 - Add a list of file names you would like to cluster. Determine whether you would like to cluster all channel groups specified in *SnippeterSettings.xml* or a select set of channel groups by commenting/uncommenting appropriate sections of the .fsx script.
+*Note*: Make sure to eliminate any ChGroups from the *SnippeterSettings.xml* files that do not have any detected spikes.
 
 - Uncomment and run the code sections at the bottom of the .fsx script (Steps 1-9) one by one in the F# interactive window. Steps 2-8 will generate a list of clustering commands which have to be copied and pasted into a powershell window on the Master node. Begin each step only once the previous step has finished running.
 
