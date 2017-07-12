@@ -108,7 +108,7 @@ The snippeting process should generate two files for each channel grouping.
 
 - Add a list of file names you would like to cluster. Determine whether you would like to cluster all channel groups specified in *SnippeterSettings.xml* or a select set of channel groups by commenting/uncommenting appropriate sections of the .fsx script.
 
-	*Note*: Make sure to delete any ChGroups folders that do not have any detected spikes and also remove these ChGroup definitions from the *SnippeterSettings.xml* file.
+	*Note*: Make sure to delete any ChGroup folders that do not have any detected spikes and also remove these ChGroup definitions from the *SnippeterSettings.xml* file.
 
 - Uncomment and run the code sections at the bottom of the .fsx script (Steps 1-9) one by one in the F# interactive window. Steps 2-8 will generate a list of clustering commands which have to be copied and pasted into a powershell window on the Master node. Begin each step only once the previous step has finished running.
 
