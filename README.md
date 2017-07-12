@@ -82,14 +82,14 @@ You will need to run **StartSnippeting.fsx** in an F# interactive window within 
 
 - Specify the grouping of channels for median subtraction. By default there are two groups comprising channels `{0,...,31}` and `{32,...,63}` which correspond to the chip grouping of channels on our custom 2X RHD2132 Intan headstage.
 
-- List the files you want to snippet, either in the .fsx script or in an external text file (see **snippeting_list_example.txt**). For each file, you can specify an optional list of channels to exclude (here, channel numbers are 1 indexed, so `{1,...,64}`) as well as the number of frames/samples to snippet (optional, in case the end of the recording is corrupted).
+- List the files you want to snippet, either in the .fsx script or in an external text file (see **snippeting_list_example.txt**). For each file, you can specify an optional list of channels to exclude (here, channel numbers are 1-indexed, so `{1,...,64}`) as well as the number of frames/samples to snippet (optional, in case the end of the recording is corrupted).
 
 - Now run the **StartSnippeting.fsx** script in [F# interactive](https://docs.microsoft.com/en-us/dotnet/fsharp/tutorials/fsharp-interactive/). Then enter the command `initall();;` in the interactive window. This will do the following...
 	- Create the required directory structure for each recording file.
 	- Create a *SnippeterSettings.xml* definition for each recording. This file contains all information about the recording to be snippeted such as channel grouping, spike detection and return to baseline thresholds, blockSize, snippet size, samples per block, median reference channel groups, etc. You can modify specific attributes in this XML file if you would like to change particular snippeting parameters.
 	- Generate a list of snippeting 'in' and 'out' paths in the F# interactive window. 
 	
--  Copy and paste the snippeting 'inpaths' and 'outpaths' from the F# interactive window on your workstation to the **SnippetAll.ps1** script in the *C:\Titanic\Snippeter\* folder on the Master node. Modify lines 20-21 in this script depending on whether you are snippeting RHD or AMP files.
+-  Copy and paste the snippeting 'inpaths' and 'outpaths' from the F# interactive window on your workstation to the **SnippetAll.ps1** script in the *C:\Titanic\Snippeter* folder on the Master node. Modify lines 20-21 in this script depending on whether you are snippeting RHD or AMP files.
 
 - To launch the snippeting process on the Worker nodes, open a powershell window on the Master node and run the command 
 `C:\Titanic\Snippeter\SnippetAll.ps1 IPaddress:port`
