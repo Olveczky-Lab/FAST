@@ -120,6 +120,5 @@ If run successfully, the clustering steps should generate an ensemble of *Merged
 To inspect and perform manual corrections of these clusters, we recommend using our [ChainViewer GUI](https://github.com/Olveczky-Lab/FAST-ChainViewer) written in Matlab.
 
 ## Sample dataset
-If you would like to test the clustering steps of FAST, a sample synthetic tetrode recording dataset is [available](https://zenodo.org/record/886516).
-
+If you would like to test the clustering steps of FAST, a sample synthetic tetrode recording dataset is [available](https://zenodo.org/record/886516). This dataset has already been snippeted so you would only need to run the Clustering steps detailed above.
 
