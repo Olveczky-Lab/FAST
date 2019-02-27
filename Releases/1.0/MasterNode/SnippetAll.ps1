@@ -18,6 +18,6 @@ For($I=0;$I -lt $inpaths.count;$I++) {
 		$inpath = $inpaths[$I]
 		$outpath = $outpaths[$I]
 		iex "& 'C:\Titanic\Snippeter\StartSnippeting.ps1' $hostname $inpath.rhd $outpath" # RHD
-#		iex "& 'C:\Titanic\Snippeter\StartSnippetingAMP.ps1' $hostname $inpath.rhd $outpath" # AMP
+#		iex "& 'C:\Titanic\Snippeter\StartSnippetingAMP.ps1' $hostname $inpath.amp $outpath" # AMP
 	}
 }
